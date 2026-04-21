@@ -7,10 +7,8 @@ import {
   HiUserGroup, HiGlobe, HiLightningBolt, HiCog, HiDocumentText, HiBadgeCheck,
   HiExternalLink, HiChevronDown,
 } from "react-icons/hi";
-import { FaLinkedin, FaGithub, FaPython, FaMicrosoft, FaAward, FaUniversity } from "react-icons/fa";
-import {
-  SiPostgresql, SiPandas, SiMicrosoftexcel, SiTableau, SiGooglecloud, SiIbm,
-} from "react-icons/si";
+import { FaLinkedin, FaGithub, FaMicrosoft, FaUniversity, FaGoogle } from "react-icons/fa";
+import { SiPostgresql } from "react-icons/si";
 import mohamedImg from "@/assets/mohamed.png";
 import { Chatbot } from "@/components/Chatbot";
 
