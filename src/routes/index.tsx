@@ -228,14 +228,14 @@ const education = [
     icon: HiSparkles,
     title: "Specialized Diploma in Applied AI",
     org: "Military Technical College (MTC)",
-    period: "2024",
+    period: "2026",
     note: "Applied AI & Machine Learning specialization.",
   },
   {
     icon: HiScale,
     title: "Master of International Law (LL.M)",
     org: "Cairo University — Faculty of Law",
-    period: "2022",
+    period: "2025",
     note: "Specialized in international regulatory frameworks.",
   },
   {
@@ -263,12 +263,14 @@ const volunteering = [
 ];
 
 const certifications = [
+  { title: "Specialized Diploma in Applied AI", issuer: "Military Technical College — 2026", icon: HiSparkles, color: "emerald" },
+  { title: "Master of International Law (LL.M)", issuer: "Cairo University — 2025", icon: HiScale, color: "cyan" },
   { title: "Power BI Data Analyst Specialist", issuer: "Microsoft", icon: FaMicrosoft, color: "cyan" },
   { title: "Google Data Analytics Certificate", issuer: "Google / Coursera", icon: FaGoogle, color: "emerald" },
   { title: "IBM Quality Work Recognition", issuer: "IBM", icon: HiBadgeCheck, color: "cyan" },
   { title: "Microsoft SQL Server", issuer: "Microsoft", icon: SiPostgresql, color: "emerald" },
   { title: "CS50: Introduction to Computer Science", issuer: "Harvard University", icon: HiAcademicCap, color: "cyan" },
-  { title: "AI Diploma", issuer: "Military Technical College", icon: HiSparkles, color: "emerald" },
+  { title: "Bachelor of Sharia & Law", issuer: "Al-Azhar University — 2019", icon: FaUniversity, color: "emerald" },
 ];
 
 /* ============================================================
@@ -388,14 +390,32 @@ function Hero() {
               Mohamed Khaled <br />
               <span className="text-gradient">Mahmoud</span>
             </h1>
-            <p className="mt-3 text-lg text-muted-foreground md:text-xl">
-              Professional Data Analyst @ <span className="text-foreground font-medium">MCIT</span>
+            <p className="mt-3 text-lg md:text-xl">
+              <span className="text-foreground font-medium">Professional Data Analyst</span>
+              <span className="text-muted-foreground"> | Legal & Regulatory Insights Specialist</span>
             </p>
             <p className="mt-4 max-w-xl text-muted-foreground">
               The rare intersection of <span className="text-emerald font-medium">Data Analytics</span> and{" "}
               <span className="text-cyan font-medium">International Law</span>. I turn complex regulatory and
-              public-sector data into clear, decision-ready intelligence.
+              public-sector data into clear, decision-ready intelligence — with 150+ high-impact projects
+              delivered across digital transformation initiatives.
             </p>
+
+            {/* social row */}
+            <div className="mt-5 flex flex-wrap items-center gap-2">
+              <a href="mailto:mohamedkhaledmahmoud97@gmail.com" aria-label="Email" className="glass grid h-10 w-10 place-items-center rounded-xl text-emerald hover:bg-white/5">
+                <HiMail />
+              </a>
+              <a href="tel:+201000525308" aria-label="Phone" className="glass grid h-10 w-10 place-items-center rounded-xl text-cyan hover:bg-white/5">
+                <HiPhone />
+              </a>
+              <a href="https://www.linkedin.com/" target="_blank" rel="noreferrer" aria-label="LinkedIn" className="glass grid h-10 w-10 place-items-center rounded-xl text-cyan hover:bg-white/5">
+                <FaLinkedin />
+              </a>
+              <a href="https://github.com/" target="_blank" rel="noreferrer" aria-label="GitHub" className="glass grid h-10 w-10 place-items-center rounded-xl hover:bg-white/5">
+                <FaGithub />
+              </a>
+            </div>
 
             {/* floating badges */}
             <div className="mt-6 flex flex-wrap gap-2">
