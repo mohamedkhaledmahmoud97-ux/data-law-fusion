@@ -264,8 +264,8 @@ const volunteering = [
 
 const certifications = [
   { title: "Power BI Data Analyst Specialist", issuer: "Microsoft", icon: FaMicrosoft, color: "cyan" },
-  { title: "Google Data Analytics Certificate", issuer: "Google / Coursera", icon: SiGooglecloud, color: "emerald" },
-  { title: "IBM Quality Work Recognition", issuer: "IBM", icon: SiIbm, color: "cyan" },
+  { title: "Google Data Analytics Certificate", issuer: "Google / Coursera", icon: FaGoogle, color: "emerald" },
+  { title: "IBM Quality Work Recognition", issuer: "IBM", icon: HiBadgeCheck, color: "cyan" },
   { title: "Microsoft SQL Server", issuer: "Microsoft", icon: SiPostgresql, color: "emerald" },
   { title: "CS50: Introduction to Computer Science", issuer: "Harvard University", icon: HiAcademicCap, color: "cyan" },
   { title: "AI Diploma", issuer: "Military Technical College", icon: HiSparkles, color: "emerald" },
