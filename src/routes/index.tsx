@@ -1043,28 +1043,152 @@ function Contact() {
    ============================================================ */
 
 function Footer() {
+  const year = 2026;
+  const navItems = [
+    { label: "About", href: "#about" },
+    { label: "Skills", href: "#skills" },
+    { label: "Experience", href: "#experience" },
+    { label: "Portfolio", href: "#portfolio" },
+    { label: "Education", href: "#education" },
+    { label: "Contact", href: "#contact" },
+  ];
+  const services = [
+    "Data Analytics & BI",
+    "Power BI Dashboards",
+    "Legal & Regulatory Insights",
+    "Public Sector Digital Transformation",
+    "SQL & Data Modeling",
+    "AI-Powered Reporting",
+  ];
+  const socials = [
+    { Icon: FaLinkedin, href: "https://www.linkedin.com/", label: "LinkedIn", color: "hover:text-cyan hover:border-cyan/60" },
+    { Icon: FaGithub, href: "https://github.com/", label: "GitHub", color: "hover:text-foreground hover:border-foreground/60" },
+    { Icon: HiMail, href: "mailto:mohamedkhaledmahmoud97@gmail.com", label: "Email", color: "hover:text-emerald hover:border-emerald/60" },
+    { Icon: HiPhone, href: "tel:+201000525308", label: "Phone", color: "hover:text-violet hover:border-violet/60" },
+  ];
+
   return (
-    <footer className="border-t border-glass-border py-10">
-      <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-4 md:flex-row">
-        <div className="flex items-center gap-2 text-sm text-muted-foreground">
-          <span className="grid h-7 w-7 place-items-center rounded-md bg-gradient-to-br from-emerald to-cyan text-background text-xs font-bold">
-            MK
-          </span>
-          © {new Date().getFullYear()} Mohamed Khaled Mahmoud. All rights reserved.
+    <footer className="relative mt-20 overflow-hidden border-t border-glass-border bg-slate-950/60 backdrop-blur-xl">
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="absolute -top-32 left-1/4 h-64 w-64 rounded-full bg-cyan/10 blur-3xl" />
+        <div className="absolute -bottom-32 right-1/4 h-64 w-64 rounded-full bg-violet/10 blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 h-px w-3/4 -translate-x-1/2 bg-gradient-to-r from-transparent via-emerald/40 to-transparent" />
+      </div>
+
+      <div className="relative mx-auto max-w-7xl px-6 py-16">
+        <div className="mb-12 flex flex-col items-start justify-between gap-6 rounded-2xl border border-glass-border bg-gradient-to-br from-slate-900/80 to-slate-900/40 p-8 backdrop-blur-md md:flex-row md:items-center">
+          <div>
+            <h3 className="text-2xl font-bold tracking-tight md:text-3xl">
+              Let's build something <span className="bg-gradient-to-r from-cyan via-emerald to-violet bg-clip-text text-transparent">data-driven</span>.
+            </h3>
+            <p className="mt-2 text-sm text-muted-foreground md:text-base">
+              Available for consulting, dashboards & legal-data projects.
+            </p>
+          </div>
+          <a
+            href="mailto:mohamedkhaledmahmoud97@gmail.com"
+            className="group inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-cyan to-violet px-6 py-3 font-semibold text-background shadow-lg shadow-cyan/20 transition hover:shadow-violet/30"
+          >
+            Start a Project
+            <HiArrowRight className="transition-transform group-hover:translate-x-1" />
+          </a>
         </div>
-        <div className="flex items-center gap-3 text-muted-foreground">
-          <a href="tel:+201000525308" className="hover:text-cyan" aria-label="Phone">
-            <HiPhone />
-          </a>
-          <a href="mailto:mohamedkhaledmahmoud97@gmail.com" className="hover:text-emerald" aria-label="Email">
-            <HiMail />
-          </a>
-          <a href="https://www.linkedin.com/" target="_blank" rel="noreferrer" className="hover:text-cyan" aria-label="LinkedIn">
-            <FaLinkedin />
-          </a>
-          <a href="https://github.com/" target="_blank" rel="noreferrer" className="hover:text-foreground" aria-label="GitHub">
-            <FaGithub />
-          </a>
+
+        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
+          <div className="lg:col-span-1">
+            <div className="flex items-center gap-3">
+              <span className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-emerald to-cyan text-background text-sm font-bold shadow-lg shadow-emerald/20">
+                MK
+              </span>
+              <div>
+                <p className="font-bold leading-tight">Mohamed Khaled</p>
+                <p className="text-xs text-muted-foreground">Data Analyst · Legal Insights</p>
+              </div>
+            </div>
+            <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+              Hybrid <span className="text-emerald">Legal + Data</span> profile delivering 150+ high-impact projects across public sector digital transformation.
+            </p>
+            <div className="mt-5 flex flex-wrap gap-2">
+              <span className="rounded-full border border-emerald/30 bg-emerald/10 px-3 py-1 text-xs text-emerald">● Available for hire</span>
+            </div>
+          </div>
+
+          <div>
+            <h4 className="mb-4 text-sm font-semibold uppercase tracking-wider text-foreground">Navigate</h4>
+            <ul className="space-y-2.5 text-sm">
+              {navItems.map((item) => (
+                <li key={item.label}>
+                  <a href={item.href} className="group inline-flex items-center gap-2 text-muted-foreground transition hover:text-cyan">
+                    <span className="h-px w-3 bg-muted-foreground transition-all group-hover:w-5 group-hover:bg-cyan" />
+                    {item.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="mb-4 text-sm font-semibold uppercase tracking-wider text-foreground">Services</h4>
+            <ul className="space-y-2.5 text-sm text-muted-foreground">
+              {services.map((s) => (
+                <li key={s} className="flex items-start gap-2">
+                  <HiCheckCircle className="mt-0.5 shrink-0 text-emerald" />
+                  <span>{s}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="mb-4 text-sm font-semibold uppercase tracking-wider text-foreground">Get in touch</h4>
+            <ul className="space-y-3 text-sm">
+              <li>
+                <a href="mailto:mohamedkhaledmahmoud97@gmail.com" className="group flex items-start gap-3 text-muted-foreground hover:text-emerald">
+                  <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg border border-glass-border bg-slate-900/60 transition group-hover:border-emerald/40">
+                    <HiMail />
+                  </span>
+                  <span className="break-all">mohamedkhaledmahmoud97@gmail.com</span>
+                </a>
+              </li>
+              <li>
+                <a href="tel:+201000525308" className="group flex items-start gap-3 text-muted-foreground hover:text-violet">
+                  <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg border border-glass-border bg-slate-900/60 transition group-hover:border-violet/40">
+                    <HiPhone />
+                  </span>
+                  <span>+20 100 052 5308</span>
+                </a>
+              </li>
+              <li>
+                <div className="flex items-start gap-3 text-muted-foreground">
+                  <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg border border-glass-border bg-slate-900/60">
+                    <HiLocationMarker />
+                  </span>
+                  <span>Cairo, Egypt</span>
+                </div>
+              </li>
+            </ul>
+
+            <div className="mt-5 flex items-center gap-2">
+              {socials.map((s) => (
+                <a
+                  key={s.label}
+                  href={s.href}
+                  aria-label={s.label}
+                  {...(s.href.startsWith("http") ? { target: "_blank", rel: "noreferrer" } : {})}
+                  className={`grid h-10 w-10 place-items-center rounded-lg border border-glass-border bg-slate-900/60 text-muted-foreground transition ${s.color}`}
+                >
+                  <s.Icon />
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-glass-border pt-6 text-xs text-muted-foreground md:flex-row">
+          <p>© {year} Mohamed Khaled Mahmoud. All rights reserved.</p>
+          <p className="flex items-center gap-2">
+            Crafted with <span className="text-emerald">data</span> · <span className="text-violet">design</span> · <span className="text-cyan">precision</span>
+          </p>
         </div>
       </div>
     </footer>
