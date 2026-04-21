@@ -100,37 +100,37 @@ const skillCategories = [
 
 const experiences = [
   {
-    period: "2025 — Present",
+    period: "June 2025 — Present",
     role: "Professional Data Analyst",
     org: "Ministry of Communications & IT (MCIT)",
     location: "Cairo, Egypt",
     points: [
       "Leading 150+ data analytics projects across public-sector digital transformation initiatives.",
-      "Designing KPI dashboards in Power BI for executive decision-making across ministries.",
-      "Building ETL pipelines processing 50K+ records using SQL and Python.",
+      "Designing executive KPI dashboards in Power BI for ministerial decision-making.",
+      "Building ETL pipelines processing 50K+ records using SQL Server and Python.",
       "Advising on data governance and regulatory compliance leveraging legal background.",
     ],
   },
   {
-    period: "2023 — 2025",
+    period: "Aug 2024 — Present",
     role: "Legal Operations Analyst",
     org: "Legal Experts Co.",
     location: "Cairo, Egypt",
     points: [
-      "Bridged legal teams and data systems to streamline contract analytics workflows.",
-      "Automated case-tracking dashboards using VBA and Power BI, reducing reporting time by 60%.",
-      "Led compliance audits aligned with international regulatory frameworks.",
+      "Bridging legal teams and data systems to streamline contract analytics workflows.",
+      "Automated case-tracking dashboards using VBA and Power BI, cutting reporting time by 60%.",
+      "Leading compliance audits aligned with international regulatory frameworks.",
     ],
   },
   {
-    period: "2022 — 2023",
+    period: "Internship",
     role: "Credit Risk Intern",
     org: "National Bank of Egypt",
     location: "Cairo, Egypt",
     points: [
       "Performed AML screening and credit risk modeling on retail loan portfolios.",
       "Built Excel + SQL models to detect anomalies in transaction patterns.",
-      "Contributed to risk reports presented to senior credit committee.",
+      "Contributed to risk reports presented to the senior credit committee.",
     ],
   },
   {
@@ -148,11 +148,27 @@ const experiences = [
 
 const portfolioItems = [
   {
-    title: "Sales Analytics Dashboard",
+    title: "Sales Analytics",
     category: "Power BI",
     description: "End-to-end Power BI dashboard tracking revenue, regional performance, and product trends with drill-through analysis.",
     metric: "↑ 28% revenue insight",
     stack: ["Power BI", "DAX", "SQL", "Power Query"],
+    gradient: "from-emerald-500/20 to-cyan-500/20",
+  },
+  {
+    title: "Customer 360",
+    category: "Power BI",
+    description: "Unified customer view combining CRM, transactions, and support tickets for retention and upsell analysis.",
+    metric: "360° customer profile",
+    stack: ["Power BI", "SQL Server", "DAX", "Python"],
+    gradient: "from-cyan-500/20 to-emerald-500/20",
+  },
+  {
+    title: "Inventory Optimization",
+    category: "Python Projects",
+    description: "Forecasting + reorder-point model that reduces stock-outs while keeping holding costs under control.",
+    metric: "↓ 22% holding cost",
+    stack: ["Python", "Pandas", "Scikit-Learn", "SQL"],
     gradient: "from-emerald-500/20 to-cyan-500/20",
   },
   {
@@ -188,20 +204,12 @@ const portfolioItems = [
     gradient: "from-emerald-500/20 to-cyan-500/20",
   },
   {
-    title: "Customer Segmentation ML",
-    category: "Python Projects",
-    description: "K-means and hierarchical clustering on customer data using Orange and Python for targeted marketing.",
-    metric: "5 actionable segments",
-    stack: ["Orange", "Python", "Scikit-Learn", "Pandas"],
-    gradient: "from-cyan-500/20 to-emerald-500/20",
-  },
-  {
     title: "Financial Reporting Automation",
     category: "Excel Dashboards",
     description: "VBA-powered Excel automation reducing monthly financial close from 5 days to 1 day.",
     metric: "↓ 80% close time",
     stack: ["Excel", "VBA", "Power Query"],
-    gradient: "from-emerald-500/20 to-cyan-500/20",
+    gradient: "from-cyan-500/20 to-emerald-500/20",
   },
   {
     title: "Legal Compliance Tracker",
@@ -209,14 +217,6 @@ const portfolioItems = [
     description: "Regulatory compliance dashboard tracking case status, deadlines, and risk levels for legal operations.",
     metric: "100% deadline compliance",
     stack: ["Power BI", "SQL", "DAX"],
-    gradient: "from-cyan-500/20 to-emerald-500/20",
-  },
-  {
-    title: "ETL Pipeline — Public Data",
-    category: "Python Projects",
-    description: "Production ETL pipeline ingesting multi-source government data into SQL Server with quality checks.",
-    metric: "99.5% data quality",
-    stack: ["Python", "SQL Server", "Pandas", "Airflow"],
     gradient: "from-emerald-500/20 to-cyan-500/20",
   },
 ];
@@ -228,14 +228,14 @@ const education = [
     icon: HiSparkles,
     title: "Specialized Diploma in Applied AI",
     org: "Military Technical College (MTC)",
-    period: "2024",
+    period: "2026",
     note: "Applied AI & Machine Learning specialization.",
   },
   {
     icon: HiScale,
     title: "Master of International Law (LL.M)",
     org: "Cairo University — Faculty of Law",
-    period: "2022",
+    period: "2025",
     note: "Specialized in international regulatory frameworks.",
   },
   {
@@ -263,12 +263,14 @@ const volunteering = [
 ];
 
 const certifications = [
+  { title: "Specialized Diploma in Applied AI", issuer: "Military Technical College — 2026", icon: HiSparkles, color: "emerald" },
+  { title: "Master of International Law (LL.M)", issuer: "Cairo University — 2025", icon: HiScale, color: "cyan" },
   { title: "Power BI Data Analyst Specialist", issuer: "Microsoft", icon: FaMicrosoft, color: "cyan" },
   { title: "Google Data Analytics Certificate", issuer: "Google / Coursera", icon: FaGoogle, color: "emerald" },
   { title: "IBM Quality Work Recognition", issuer: "IBM", icon: HiBadgeCheck, color: "cyan" },
   { title: "Microsoft SQL Server", issuer: "Microsoft", icon: SiPostgresql, color: "emerald" },
   { title: "CS50: Introduction to Computer Science", issuer: "Harvard University", icon: HiAcademicCap, color: "cyan" },
-  { title: "AI Diploma", issuer: "Military Technical College", icon: HiSparkles, color: "emerald" },
+  { title: "Bachelor of Sharia & Law", issuer: "Al-Azhar University — 2019", icon: FaUniversity, color: "emerald" },
 ];
 
 /* ============================================================
@@ -388,14 +390,32 @@ function Hero() {
               Mohamed Khaled <br />
               <span className="text-gradient">Mahmoud</span>
             </h1>
-            <p className="mt-3 text-lg text-muted-foreground md:text-xl">
-              Professional Data Analyst @ <span className="text-foreground font-medium">MCIT</span>
+            <p className="mt-3 text-lg md:text-xl">
+              <span className="text-foreground font-medium">Professional Data Analyst</span>
+              <span className="text-muted-foreground"> | Legal & Regulatory Insights Specialist</span>
             </p>
             <p className="mt-4 max-w-xl text-muted-foreground">
               The rare intersection of <span className="text-emerald font-medium">Data Analytics</span> and{" "}
               <span className="text-cyan font-medium">International Law</span>. I turn complex regulatory and
-              public-sector data into clear, decision-ready intelligence.
+              public-sector data into clear, decision-ready intelligence — with 150+ high-impact projects
+              delivered across digital transformation initiatives.
             </p>
+
+            {/* social row */}
+            <div className="mt-5 flex flex-wrap items-center gap-2">
+              <a href="mailto:mohamedkhaledmahmoud97@gmail.com" aria-label="Email" className="glass grid h-10 w-10 place-items-center rounded-xl text-emerald hover:bg-white/5">
+                <HiMail />
+              </a>
+              <a href="tel:+201000525308" aria-label="Phone" className="glass grid h-10 w-10 place-items-center rounded-xl text-cyan hover:bg-white/5">
+                <HiPhone />
+              </a>
+              <a href="https://www.linkedin.com/" target="_blank" rel="noreferrer" aria-label="LinkedIn" className="glass grid h-10 w-10 place-items-center rounded-xl text-cyan hover:bg-white/5">
+                <FaLinkedin />
+              </a>
+              <a href="https://github.com/" target="_blank" rel="noreferrer" aria-label="GitHub" className="glass grid h-10 w-10 place-items-center rounded-xl hover:bg-white/5">
+                <FaGithub />
+              </a>
+            </div>
 
             {/* floating badges */}
             <div className="mt-6 flex flex-wrap gap-2">
@@ -1033,14 +1053,17 @@ function Footer() {
           © {new Date().getFullYear()} Mohamed Khaled Mahmoud. All rights reserved.
         </div>
         <div className="flex items-center gap-3 text-muted-foreground">
+          <a href="tel:+201000525308" className="hover:text-cyan" aria-label="Phone">
+            <HiPhone />
+          </a>
+          <a href="mailto:mohamedkhaledmahmoud97@gmail.com" className="hover:text-emerald" aria-label="Email">
+            <HiMail />
+          </a>
           <a href="https://www.linkedin.com/" target="_blank" rel="noreferrer" className="hover:text-cyan" aria-label="LinkedIn">
             <FaLinkedin />
           </a>
           <a href="https://github.com/" target="_blank" rel="noreferrer" className="hover:text-foreground" aria-label="GitHub">
             <FaGithub />
-          </a>
-          <a href="mailto:mohamedkhaledmahmoud97@gmail.com" className="hover:text-emerald" aria-label="Email">
-            <HiMail />
           </a>
         </div>
       </div>
