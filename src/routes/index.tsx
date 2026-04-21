@@ -291,7 +291,7 @@ function Portfolio() {
         <About />
         <Skills />
         <Experience />
-        <Portfolio />
+        <PortfolioSection />
         <Education />
         <Certifications />
         <Contact />
