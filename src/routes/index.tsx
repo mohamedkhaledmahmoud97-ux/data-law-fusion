@@ -100,37 +100,37 @@ const skillCategories = [
 
 const experiences = [
   {
-    period: "2025 — Present",
+    period: "June 2025 — Present",
     role: "Professional Data Analyst",
     org: "Ministry of Communications & IT (MCIT)",
     location: "Cairo, Egypt",
     points: [
       "Leading 150+ data analytics projects across public-sector digital transformation initiatives.",
-      "Designing KPI dashboards in Power BI for executive decision-making across ministries.",
-      "Building ETL pipelines processing 50K+ records using SQL and Python.",
+      "Designing executive KPI dashboards in Power BI for ministerial decision-making.",
+      "Building ETL pipelines processing 50K+ records using SQL Server and Python.",
       "Advising on data governance and regulatory compliance leveraging legal background.",
     ],
   },
   {
-    period: "2023 — 2025",
+    period: "Aug 2024 — Present",
     role: "Legal Operations Analyst",
     org: "Legal Experts Co.",
     location: "Cairo, Egypt",
     points: [
-      "Bridged legal teams and data systems to streamline contract analytics workflows.",
-      "Automated case-tracking dashboards using VBA and Power BI, reducing reporting time by 60%.",
-      "Led compliance audits aligned with international regulatory frameworks.",
+      "Bridging legal teams and data systems to streamline contract analytics workflows.",
+      "Automated case-tracking dashboards using VBA and Power BI, cutting reporting time by 60%.",
+      "Leading compliance audits aligned with international regulatory frameworks.",
     ],
   },
   {
-    period: "2022 — 2023",
+    period: "Internship",
     role: "Credit Risk Intern",
     org: "National Bank of Egypt",
     location: "Cairo, Egypt",
     points: [
       "Performed AML screening and credit risk modeling on retail loan portfolios.",
       "Built Excel + SQL models to detect anomalies in transaction patterns.",
-      "Contributed to risk reports presented to senior credit committee.",
+      "Contributed to risk reports presented to the senior credit committee.",
     ],
   },
   {
@@ -148,11 +148,27 @@ const experiences = [
 
 const portfolioItems = [
   {
-    title: "Sales Analytics Dashboard",
+    title: "Sales Analytics",
     category: "Power BI",
     description: "End-to-end Power BI dashboard tracking revenue, regional performance, and product trends with drill-through analysis.",
     metric: "↑ 28% revenue insight",
     stack: ["Power BI", "DAX", "SQL", "Power Query"],
+    gradient: "from-emerald-500/20 to-cyan-500/20",
+  },
+  {
+    title: "Customer 360",
+    category: "Power BI",
+    description: "Unified customer view combining CRM, transactions, and support tickets for retention and upsell analysis.",
+    metric: "360° customer profile",
+    stack: ["Power BI", "SQL Server", "DAX", "Python"],
+    gradient: "from-cyan-500/20 to-emerald-500/20",
+  },
+  {
+    title: "Inventory Optimization",
+    category: "Python Projects",
+    description: "Forecasting + reorder-point model that reduces stock-outs while keeping holding costs under control.",
+    metric: "↓ 22% holding cost",
+    stack: ["Python", "Pandas", "Scikit-Learn", "SQL"],
     gradient: "from-emerald-500/20 to-cyan-500/20",
   },
   {
@@ -188,20 +204,12 @@ const portfolioItems = [
     gradient: "from-emerald-500/20 to-cyan-500/20",
   },
   {
-    title: "Customer Segmentation ML",
-    category: "Python Projects",
-    description: "K-means and hierarchical clustering on customer data using Orange and Python for targeted marketing.",
-    metric: "5 actionable segments",
-    stack: ["Orange", "Python", "Scikit-Learn", "Pandas"],
-    gradient: "from-cyan-500/20 to-emerald-500/20",
-  },
-  {
     title: "Financial Reporting Automation",
     category: "Excel Dashboards",
     description: "VBA-powered Excel automation reducing monthly financial close from 5 days to 1 day.",
     metric: "↓ 80% close time",
     stack: ["Excel", "VBA", "Power Query"],
-    gradient: "from-emerald-500/20 to-cyan-500/20",
+    gradient: "from-cyan-500/20 to-emerald-500/20",
   },
   {
     title: "Legal Compliance Tracker",
@@ -209,14 +217,6 @@ const portfolioItems = [
     description: "Regulatory compliance dashboard tracking case status, deadlines, and risk levels for legal operations.",
     metric: "100% deadline compliance",
     stack: ["Power BI", "SQL", "DAX"],
-    gradient: "from-cyan-500/20 to-emerald-500/20",
-  },
-  {
-    title: "ETL Pipeline — Public Data",
-    category: "Python Projects",
-    description: "Production ETL pipeline ingesting multi-source government data into SQL Server with quality checks.",
-    metric: "99.5% data quality",
-    stack: ["Python", "SQL Server", "Pandas", "Airflow"],
     gradient: "from-emerald-500/20 to-cyan-500/20",
   },
 ];
