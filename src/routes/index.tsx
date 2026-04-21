@@ -1053,14 +1053,17 @@ function Footer() {
           © {new Date().getFullYear()} Mohamed Khaled Mahmoud. All rights reserved.
         </div>
         <div className="flex items-center gap-3 text-muted-foreground">
+          <a href="tel:+201000525308" className="hover:text-cyan" aria-label="Phone">
+            <HiPhone />
+          </a>
+          <a href="mailto:mohamedkhaledmahmoud97@gmail.com" className="hover:text-emerald" aria-label="Email">
+            <HiMail />
+          </a>
           <a href="https://www.linkedin.com/" target="_blank" rel="noreferrer" className="hover:text-cyan" aria-label="LinkedIn">
             <FaLinkedin />
           </a>
           <a href="https://github.com/" target="_blank" rel="noreferrer" className="hover:text-foreground" aria-label="GitHub">
             <FaGithub />
-          </a>
-          <a href="mailto:mohamedkhaledmahmoud97@gmail.com" className="hover:text-emerald" aria-label="Email">
-            <HiMail />
           </a>
         </div>
       </div>
