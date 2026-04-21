@@ -711,7 +711,7 @@ function Experience() {
    PORTFOLIO GALLERY
    ============================================================ */
 
-function Portfolio() {
+function PortfolioSection() {
   const [filter, setFilter] = useState("All");
   const filtered = filter === "All" ? portfolioItems : portfolioItems.filter((p) => p.category === filter);
 
