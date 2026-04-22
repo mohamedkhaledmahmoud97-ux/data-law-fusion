@@ -392,6 +392,7 @@ function Portfolio() {
       <Nav />
       <main>
         <Hero />
+        <Offer />
         <About />
         <Skills />
         <Experience />
@@ -407,11 +408,35 @@ function Portfolio() {
 }
 
 /* ============================================================
+   THEME TOGGLE
+   ============================================================ */
+
+function useTheme() {
+  const [theme, setTheme] = useState<"dark" | "light">("dark");
+  useEffect(() => {
+    const saved = (typeof window !== "undefined" && localStorage.getItem("theme")) as "dark" | "light" | null;
+    const initial = saved ?? "dark";
+    setTheme(initial);
+    document.documentElement.classList.toggle("light", initial === "light");
+    document.documentElement.classList.toggle("dark", initial === "dark");
+  }, []);
+  const toggle = () => {
+    const next = theme === "dark" ? "light" : "dark";
+    setTheme(next);
+    if (typeof window !== "undefined") localStorage.setItem("theme", next);
+    document.documentElement.classList.toggle("light", next === "light");
+    document.documentElement.classList.toggle("dark", next === "dark");
+  };
+  return { theme, toggle };
+}
+
+/* ============================================================
    NAV
    ============================================================ */
 
 function Nav() {
   const [open, setOpen] = useState(false);
+  const { theme, toggle } = useTheme();
   return (
     <header className="fixed top-0 left-0 right-0 z-40">
       <div className="mx-auto mt-4 max-w-6xl px-4">
@@ -434,19 +459,30 @@ function Nav() {
               </li>
             ))}
           </ul>
-          <a
-            href="#contact"
-            className="hidden items-center gap-1.5 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90 md:inline-flex"
-          >
-            Hire me <HiArrowRight />
-          </a>
-          <button
-            onClick={() => setOpen((o) => !o)}
-            className="rounded-lg p-2 text-foreground md:hidden"
-            aria-label="Toggle menu"
-          >
-            <HiChevronDown className={`transition-transform ${open ? "rotate-180" : ""}`} />
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={toggle}
+              aria-label="Toggle theme"
+              className="grid h-9 w-9 place-items-center rounded-lg glass text-foreground transition hover:bg-white/5"
+            >
+              {theme === "dark" ? <HiSun /> : <HiMoon />}
+            </button>
+            <a
+              href={CALENDLY_URL}
+              target="_blank"
+              rel="noreferrer"
+              className="hidden items-center gap-1.5 rounded-lg bg-gradient-to-r from-emerald to-cyan px-4 py-2 text-sm font-semibold text-background shadow-[0_0_25px_-5px] shadow-emerald transition-opacity hover:opacity-90 md:inline-flex"
+            >
+              Book Free Call <HiArrowRight />
+            </a>
+            <button
+              onClick={() => setOpen((o) => !o)}
+              className="rounded-lg p-2 text-foreground md:hidden"
+              aria-label="Toggle menu"
+            >
+              <HiChevronDown className={`transition-transform ${open ? "rotate-180" : ""}`} />
+            </button>
+          </div>
         </nav>
         {open && (
           <div className="glass mt-2 rounded-2xl p-3 md:hidden">
