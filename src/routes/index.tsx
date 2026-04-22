@@ -1303,13 +1303,15 @@ function PortfolioSection() {
                 className="group glass overflow-hidden rounded-2xl flex flex-col"
               >
                 <div className="relative aspect-video overflow-hidden bg-gradient-to-br from-emerald/15 via-cyan/10 to-violet/15">
-                  <div className="absolute inset-0 grid-bg opacity-30" />
-                  <div className="absolute bottom-3 left-3 right-3 flex h-10 items-end gap-1 opacity-60">
-                    {[40, 70, 30, 90, 55, 75, 45, 85, 60].map((h, i) => (
-                      <div key={i} style={{ height: `${h}%` }}
-                        className={`flex-1 rounded-sm ${i % 3 === 0 ? "bg-violet/70" : i % 2 ? "bg-cyan/70" : "bg-emerald/70"}`} />
-                    ))}
-                  </div>
+                  <img
+                    src={p.image}
+                    alt={p.title}
+                    loading="lazy"
+                    width={1280}
+                    height={768}
+                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent" />
                 </div>
                 <div className="flex flex-1 flex-col p-5">
                   <h3 className="font-semibold transition-colors group-hover:text-emerald">{p.title}</h3>
