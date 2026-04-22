@@ -229,6 +229,102 @@ const portfolioItems = [
 
 const portfolioFilters = ["All", "Power BI", "Excel Dashboards", "Python Projects"];
 
+/* ---------- Featured Projects (AI / Data Science showcase) ---------- */
+
+const featuredProject = {
+  title: "Telco Customer Churn Prediction",
+  description:
+    "End-to-end ML pipeline to predict telecom customers at risk of churning using XGBoost and Random Forest, deployed as an interactive Streamlit application.",
+  highlight:
+    "Deployable churn prediction model enabling proactive retention strategies to protect telecom revenue.",
+  tags: ["Python", "Machine Learning", "XGBoost", "Streamlit"],
+  codeUrl: `${GITHUB_URL}?tab=repositories`,
+  demoUrl: "#",
+  metric: "↑ 87% AUC · production-ready",
+};
+
+const aiProjects = [
+  {
+    title: "UK Road Accident Severity Analysis",
+    description:
+      "Predictive ML model classifying accident severity using geospatial data, weather conditions and vehicle features, visualized on interactive Folium maps.",
+    tags: ["Python", "Machine Learning", "Classification", "Data Analysis", "EDA"],
+    codeUrl: `${GITHUB_URL}`,
+    demoUrl: "#",
+  },
+  {
+    title: "Student Performance Statistical Analysis",
+    description:
+      "Statistical investigation of factors driving student outcomes — combining SPSS hypothesis testing with Python EDA & visualization.",
+    tags: ["Python", "Data Analysis", "EDA", "SQL"],
+    codeUrl: `${GITHUB_URL}`,
+    demoUrl: "#",
+  },
+  {
+    title: "Random Password Maker & Strength Checker",
+    description:
+      "ML-based password security tool that generates strong passwords and predicts strength using a trained classifier.",
+    tags: ["Python", "Machine Learning", "Cybersecurity", "Algorithms"],
+    codeUrl: `${GITHUB_URL}`,
+    demoUrl: "#",
+  },
+  {
+    title: "Sentiment Analysis with BERT",
+    description:
+      "Fine-tuned BERT transformer for product review sentiment classification, deployed via FastAPI with batch + streaming inference.",
+    tags: ["Python", "Deep Learning", "NLP", "BERT", "TensorFlow"],
+    codeUrl: `${GITHUB_URL}`,
+    demoUrl: "#",
+  },
+  {
+    title: "Real-Time Object Detection",
+    description:
+      "Computer Vision pipeline using OpenCV + YOLO for real-time object detection in retail surveillance footage.",
+    tags: ["Python", "Computer Vision", "Deep Learning", "OpenCV", "AI"],
+    codeUrl: `${GITHUB_URL}`,
+    demoUrl: "#",
+  },
+  {
+    title: "Customer Segmentation (K-Means)",
+    description:
+      "Unsupervised clustering of e-commerce customers into actionable personas, with Streamlit dashboard for marketing teams.",
+    tags: ["Python", "Machine Learning", "Algorithms", "Streamlit", "Data Analysis"],
+    codeUrl: `${GITHUB_URL}`,
+    demoUrl: "#",
+  },
+  {
+    title: "Sales Forecasting with XGBoost",
+    description:
+      "Gradient-boosted regression model for monthly sales forecasting with feature engineering on seasonality & promotions.",
+    tags: ["Python", "Machine Learning", "XGBoost", "SQL"],
+    codeUrl: `${GITHUB_URL}`,
+    demoUrl: "#",
+  },
+  {
+    title: "Network Intrusion Detection",
+    description:
+      "Cybersecurity classifier detecting anomalous network traffic patterns using ensemble methods on the NSL-KDD dataset.",
+    tags: ["Python", "Machine Learning", "Cybersecurity", "Classification"],
+    codeUrl: `${GITHUB_URL}`,
+    demoUrl: "#",
+  },
+  {
+    title: "Resume Screening NLP",
+    description:
+      "NLP pipeline parsing and ranking resumes against job descriptions with TF-IDF + transformer embeddings.",
+    tags: ["Python", "NLP", "Machine Learning", "AI"],
+    codeUrl: `${GITHUB_URL}`,
+    demoUrl: "#",
+  },
+];
+
+const allProjectTags = [
+  "AI", "Algorithms", "BERT", "Classification", "Computer Vision", "Cybersecurity",
+  "Data Analysis", "Deep Learning", "EDA", "Machine Learning", "NLP", "OpenCV",
+  "Python", "SQL", "Streamlit", "TensorFlow", "XGBoost",
+];
+const PROJECTS_PER_PAGE = 6;
+
 const education = [
   {
     icon: HiSparkles,
