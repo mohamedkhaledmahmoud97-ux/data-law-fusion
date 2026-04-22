@@ -1237,18 +1237,18 @@ function PortfolioSection() {
           >
             <div className="grid md:grid-cols-2">
               {/* visual */}
-              <div className="relative aspect-video md:aspect-auto bg-gradient-to-br from-emerald/20 via-cyan/10 to-violet/20 p-6">
-                <div className="absolute inset-0 grid-bg opacity-30" />
-                <div className="relative flex h-full flex-col justify-between">
-                  <div className="inline-flex w-fit items-center gap-1.5 rounded-full bg-emerald/20 px-3 py-1 text-xs font-bold text-emerald">
-                    <HiSparkles /> FEATURED PROJECT
-                  </div>
-                  <div className="flex items-end gap-1 opacity-80">
-                    {[40, 70, 30, 90, 55, 75, 45, 85, 60, 95, 50, 80].map((h, i) => (
-                      <div key={i} style={{ height: `${h * 0.8}px` }}
-                        className={`flex-1 rounded-sm ${i % 3 === 0 ? "bg-violet/70" : i % 2 ? "bg-cyan/70" : "bg-emerald/70"}`} />
-                    ))}
-                  </div>
+              <div className="relative min-h-[260px] overflow-hidden bg-gradient-to-br from-emerald/10 via-cyan/5 to-violet/10">
+                <img
+                  src={featuredProject.image}
+                  alt={featuredProject.title}
+                  loading="lazy"
+                  width={1280}
+                  height={768}
+                  className="absolute inset-0 h-full w-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-background/10 to-transparent" />
+                <div className="absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-emerald/90 px-3 py-1 text-xs font-bold text-background backdrop-blur">
+                  <HiSparkles /> FEATURED PROJECT
                 </div>
               </div>
               {/* content */}
