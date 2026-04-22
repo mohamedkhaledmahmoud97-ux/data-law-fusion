@@ -1016,90 +1016,290 @@ function Experience() {
    ============================================================ */
 
 function PortfolioSection() {
-  const [filter, setFilter] = useState("All");
-  const filtered = filter === "All" ? portfolioItems : portfolioItems.filter((p) => p.category === filter);
+  const [activeTag, setActiveTag] = useState<string | null>(null);
+  const [search, setSearch] = useState("");
+  const [page, setPage] = useState(1);
+
+  const totalProjects = aiProjects.length + 1; // include featured
+
+  const filtered = useMemo(() => {
+    const q = search.trim().toLowerCase();
+    return aiProjects.filter((p) => {
+      const matchesTag = !activeTag || p.tags.includes(activeTag);
+      const matchesSearch =
+        !q ||
+        p.title.toLowerCase().includes(q) ||
+        p.description.toLowerCase().includes(q) ||
+        p.tags.some((t) => t.toLowerCase().includes(q));
+      return matchesTag && matchesSearch;
+    });
+  }, [activeTag, search]);
+
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PROJECTS_PER_PAGE));
+  const safePage = Math.min(page, totalPages);
+  const paginated = filtered.slice((safePage - 1) * PROJECTS_PER_PAGE, safePage * PROJECTS_PER_PAGE);
+
+  // reset page when filter/search changes
+  useEffect(() => { setPage(1); }, [activeTag, search]);
 
   return (
     <section id="portfolio" className="py-20">
       <div className="mx-auto max-w-6xl px-4">
-        <SectionTitle
-          eyebrow="Portfolio"
-          title="Portfolio & Dashboards"
-          sub="Selected work across Power BI, Excel, and Python — built for clarity and impact."
-        />
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mb-8 flex flex-col gap-3 md:flex-row md:items-end md:justify-between"
+        >
+          <div>
+            <div className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald">Portfolio</div>
+            <h2 className="mt-2 text-3xl font-bold md:text-4xl">Featured Projects</h2>
+            <p className="mt-2 max-w-2xl text-muted-foreground">
+              A showcase of production-ready AI applications, predictive models, and data-driven solutions.
+            </p>
+          </div>
+          <div className="flex items-center gap-3">
+            <span className="inline-flex items-center gap-1.5 rounded-full glass px-3 py-1.5 text-xs font-semibold">
+              <HiSparkles className="text-emerald" /> {totalProjects} Projects
+            </span>
+            <a
+              href={GITHUB_URL}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1.5 rounded-full glass px-3 py-1.5 text-xs font-semibold hover:bg-white/5"
+            >
+              <FaGithub /> GitHub
+            </a>
+          </div>
+        </motion.div>
 
-        {/* filters */}
-        <div className="mb-8 flex flex-wrap justify-center gap-2">
-          {portfolioFilters.map((f) => {
-            const active = filter === f;
+        {/* Search */}
+        <div className="relative mb-5">
+          <HiSearch className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground" />
+          <input
+            type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Search projects by title, description, or tags..."
+            className="w-full rounded-xl glass border border-glass-border py-3 pl-11 pr-4 text-sm text-foreground placeholder:text-muted-foreground outline-none transition focus:border-emerald/60"
+          />
+        </div>
+
+        {/* Tag chips */}
+        <div className="mb-8 flex flex-wrap gap-2">
+          <button
+            onClick={() => setActiveTag(null)}
+            className={`rounded-full px-3.5 py-1.5 text-xs font-semibold transition ${
+              !activeTag
+                ? "bg-gradient-to-r from-emerald to-cyan text-background shadow-[0_0_15px_-5px] shadow-emerald"
+                : "glass text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            All
+          </button>
+          {allProjectTags.map((t) => {
+            const active = activeTag === t;
             return (
               <button
-                key={f}
-                onClick={() => setFilter(f)}
-                className={`rounded-full px-4 py-1.5 text-sm font-medium transition-all ${
+                key={t}
+                onClick={() => setActiveTag(active ? null : t)}
+                className={`rounded-full px-3.5 py-1.5 text-xs font-medium transition ${
                   active
-                    ? "bg-gradient-to-r from-emerald to-cyan text-background shadow-[0_0_20px_-5px] shadow-emerald"
+                    ? "bg-gradient-to-r from-emerald to-cyan text-background shadow-[0_0_15px_-5px] shadow-emerald"
                     : "glass text-muted-foreground hover:text-foreground"
                 }`}
               >
-                {f}
+                {t}
               </button>
             );
           })}
         </div>
 
-        <motion.div layout className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {filtered.map((p, idx) => (
-            <motion.article
-              key={p.title}
-              layout
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ delay: idx * 0.04 }}
-              whileHover={{ y: -4 }}
-              className="group glass overflow-hidden rounded-2xl"
-            >
-              {/* aspect-video preview */}
-              <div className={`relative aspect-video overflow-hidden bg-gradient-to-br ${p.gradient}`}>
+        {/* Featured large card */}
+        {(!activeTag || featuredProject.tags.includes(activeTag)) &&
+         (!search.trim() || [featuredProject.title, featuredProject.description, ...featuredProject.tags].join(" ").toLowerCase().includes(search.trim().toLowerCase())) && (
+          <motion.article
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="group relative mb-8 overflow-hidden rounded-2xl glass-strong border border-emerald/30 p-0"
+          >
+            <div className="grid md:grid-cols-2">
+              {/* visual */}
+              <div className="relative aspect-video md:aspect-auto bg-gradient-to-br from-emerald/20 via-cyan/10 to-violet/20 p-6">
                 <div className="absolute inset-0 grid-bg opacity-30" />
-                <div className="absolute inset-0 grid place-items-center">
-                  <div className="glass-strong rounded-xl px-4 py-2 text-xs font-medium text-foreground/90">
-                    {p.category}
+                <div className="relative flex h-full flex-col justify-between">
+                  <div className="inline-flex w-fit items-center gap-1.5 rounded-full bg-emerald/20 px-3 py-1 text-xs font-bold text-emerald">
+                    <HiSparkles /> FEATURED PROJECT
+                  </div>
+                  <div className="flex items-end gap-1 opacity-80">
+                    {[40, 70, 30, 90, 55, 75, 45, 85, 60, 95, 50, 80].map((h, i) => (
+                      <div key={i} style={{ height: `${h * 0.8}px` }}
+                        className={`flex-1 rounded-sm ${i % 3 === 0 ? "bg-violet/70" : i % 2 ? "bg-cyan/70" : "bg-emerald/70"}`} />
+                    ))}
                   </div>
                 </div>
-                {/* fake chart bars decoration */}
-                <div className="absolute bottom-3 left-3 right-3 flex h-10 items-end gap-1 opacity-60">
-                  {[40, 70, 30, 90, 55, 75, 45, 85, 60].map((h, i) => (
-                    <div
-                      key={i}
-                      style={{ height: `${h}%` }}
-                      className={`flex-1 rounded-sm ${
-                        i % 2 ? "bg-cyan/70" : "bg-emerald/70"
-                      }`}
-                    />
-                  ))}
-                </div>
               </div>
-              <div className="p-5">
-                <h3 className="font-semibold transition-colors group-hover:text-emerald">{p.title}</h3>
-                <p className="mt-1.5 text-sm text-muted-foreground line-clamp-3">{p.description}</p>
-                <div className="mt-3 inline-flex items-center gap-1.5 rounded-md bg-emerald/10 px-2 py-1 text-xs font-medium text-emerald">
-                  <HiLightningBolt /> {p.metric}
+              {/* content */}
+              <div className="p-6 md:p-8">
+                <h3 className="text-xl font-bold md:text-2xl">{featuredProject.title}</h3>
+                <p className="mt-3 text-sm text-muted-foreground">{featuredProject.description}</p>
+                <div className="mt-4 rounded-xl border border-emerald/30 bg-emerald/5 p-3 text-sm">
+                  <div className="flex gap-2">
+                    <HiLightningBolt className="mt-0.5 shrink-0 text-emerald" />
+                    <span className="text-foreground/90">{featuredProject.highlight}</span>
+                  </div>
                 </div>
-                <div className="mt-3 flex flex-wrap gap-1.5">
-                  {p.stack.map((t) => (
-                    <span
-                      key={t}
-                      className="rounded-md border border-glass-border bg-white/[0.03] px-2 py-0.5 text-[11px] text-muted-foreground"
-                    >
+                <div className="mt-4 flex flex-wrap gap-1.5">
+                  {featuredProject.tags.map((t) => (
+                    <span key={t} className="rounded-md border border-emerald/30 bg-emerald/10 px-2 py-0.5 text-[11px] font-medium text-emerald">
                       {t}
                     </span>
                   ))}
                 </div>
+                <div className="mt-5 flex flex-wrap gap-2">
+                  <a href={featuredProject.codeUrl} target="_blank" rel="noreferrer"
+                    className="inline-flex items-center gap-1.5 rounded-lg glass border border-glass-border px-4 py-2 text-sm font-semibold hover:bg-white/5">
+                    <FaGithub /> View Code
+                  </a>
+                  <a href={featuredProject.demoUrl} target="_blank" rel="noreferrer"
+                    className="inline-flex items-center gap-1.5 rounded-lg bg-gradient-to-r from-emerald to-cyan px-4 py-2 text-sm font-semibold text-background hover:opacity-90">
+                    <HiExternalLink /> View Dashboard
+                  </a>
+                </div>
               </div>
-            </motion.article>
-          ))}
+            </div>
+          </motion.article>
+        )}
+
+        {/* Project grid */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={`${activeTag ?? "all"}-${search}-${safePage}`}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.25 }}
+            className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
+          >
+            {paginated.map((p, idx) => (
+              <motion.article
+                key={p.title}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: idx * 0.04 }}
+                whileHover={{ y: -4 }}
+                className="group glass overflow-hidden rounded-2xl flex flex-col"
+              >
+                <div className="relative aspect-video overflow-hidden bg-gradient-to-br from-emerald/15 via-cyan/10 to-violet/15">
+                  <div className="absolute inset-0 grid-bg opacity-30" />
+                  <div className="absolute bottom-3 left-3 right-3 flex h-10 items-end gap-1 opacity-60">
+                    {[40, 70, 30, 90, 55, 75, 45, 85, 60].map((h, i) => (
+                      <div key={i} style={{ height: `${h}%` }}
+                        className={`flex-1 rounded-sm ${i % 3 === 0 ? "bg-violet/70" : i % 2 ? "bg-cyan/70" : "bg-emerald/70"}`} />
+                    ))}
+                  </div>
+                </div>
+                <div className="flex flex-1 flex-col p-5">
+                  <h3 className="font-semibold transition-colors group-hover:text-emerald">{p.title}</h3>
+                  <p className="mt-1.5 text-sm text-muted-foreground line-clamp-3">{p.description}</p>
+                  <div className="mt-3 flex flex-wrap gap-1.5">
+                    {p.tags.slice(0, 4).map((t) => (
+                      <span key={t} className="rounded-md border border-glass-border bg-white/[0.03] px-2 py-0.5 text-[11px] text-muted-foreground">
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="mt-auto pt-4 flex gap-2">
+                    <a href={p.codeUrl} target="_blank" rel="noreferrer"
+                      className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg glass border border-glass-border px-3 py-2 text-xs font-semibold hover:bg-white/5">
+                      <FaGithub /> View Code
+                    </a>
+                    <a href={p.demoUrl} target="_blank" rel="noreferrer"
+                      className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg bg-gradient-to-r from-emerald to-cyan px-3 py-2 text-xs font-semibold text-background hover:opacity-90">
+                      <HiExternalLink /> Dashboard
+                    </a>
+                  </div>
+                </div>
+              </motion.article>
+            ))}
+          </motion.div>
+        </AnimatePresence>
+
+        {filtered.length === 0 && (
+          <div className="mt-10 rounded-2xl glass p-10 text-center">
+            <HiSearch className="mx-auto h-8 w-8 text-muted-foreground" />
+            <p className="mt-3 text-sm text-muted-foreground">
+              No projects match your search. Try clearing filters or a different keyword.
+            </p>
+          </div>
+        )}
+
+        {/* Pagination */}
+        {filtered.length > 0 && (
+          <div className="mt-10 flex flex-col items-center justify-between gap-4 sm:flex-row">
+            <p className="text-xs text-muted-foreground">
+              Showing {paginated.length} of {filtered.length} projects — Page {safePage} of {totalPages}
+            </p>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setPage((p) => Math.max(1, p - 1))}
+                disabled={safePage === 1}
+                className="inline-flex items-center gap-1 rounded-lg glass border border-glass-border px-3 py-2 text-xs font-semibold transition disabled:cursor-not-allowed disabled:opacity-40 hover:bg-white/5"
+              >
+                <HiChevronLeft /> Previous
+              </button>
+              {Array.from({ length: totalPages }).map((_, i) => {
+                const n = i + 1;
+                const active = n === safePage;
+                return (
+                  <button
+                    key={n}
+                    onClick={() => setPage(n)}
+                    className={`grid h-8 w-8 place-items-center rounded-lg text-xs font-semibold transition ${
+                      active
+                        ? "bg-gradient-to-r from-emerald to-cyan text-background shadow-[0_0_15px_-5px] shadow-emerald"
+                        : "glass text-muted-foreground hover:text-foreground"
+                    }`}
+                  >
+                    {n}
+                  </button>
+                );
+              })}
+              <button
+                onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                disabled={safePage === totalPages}
+                className="inline-flex items-center gap-1 rounded-lg glass border border-glass-border px-3 py-2 text-xs font-semibold transition disabled:cursor-not-allowed disabled:opacity-40 hover:bg-white/5"
+              >
+                Next <HiChevronRight />
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* End-of-section CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mt-12 relative overflow-hidden rounded-2xl glass-strong border border-violet/30 p-8 text-center"
+        >
+          <div className="absolute -top-20 left-1/2 h-40 w-80 -translate-x-1/2 rounded-full bg-violet/20 blur-3xl" />
+          <div className="relative">
+            <h3 className="text-2xl font-bold md:text-3xl">
+              Want similar results <span className="text-gradient">for your business?</span>
+            </h3>
+            <p className="mt-2 text-muted-foreground">
+              Let's build a custom AI solution tailored to your needs.
+            </p>
+            <a
+              href="#contact"
+              className="mt-5 inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-emerald via-cyan to-violet px-6 py-3 text-sm font-bold text-background shadow-[0_0_30px_-5px] shadow-violet transition-transform hover:scale-105"
+            >
+              <HiSparkles /> Start Your Project <HiArrowRight />
+            </a>
+          </div>
         </motion.div>
       </div>
     </section>
