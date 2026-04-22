@@ -30,6 +30,8 @@
   --color-ring: var(--ring);
   --color-emerald: var(--emerald);
   --color-cyan: var(--cyan);
+  --color-violet: var(--violet);
+  --color-blue: var(--blue);
   --color-glass: var(--glass);
   --color-glass-border: var(--glass-border);
   --font-mono: ui-monospace, "JetBrains Mono", "Fira Code", monospace;
