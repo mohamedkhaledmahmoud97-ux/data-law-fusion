@@ -263,6 +263,7 @@ const featuredProject = {
   codeUrl: `${GITHUB_URL}?tab=repositories`,
   demoUrl: "#",
   metric: "↑ 87% AUC · production-ready",
+  image: imgChurn,
 };
 
 const aiProjects = [
