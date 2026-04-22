@@ -267,6 +267,81 @@ const featuredProject = {
 };
 
 const aiProjects = [
+  // ---------- Real dashboards (Power BI / Excel / Orange) ----------
+  {
+    title: "Annual Sales Report — Power BI",
+    description:
+      "Power BI executive dashboard tracking 8.8K orders & 84M total revenue across products, sectors and accounts with year-over-year analysis.",
+    tags: ["Power BI", "SQL", "Data Analysis", "EDA"],
+    codeUrl: `${GITHUB_URL}`,
+    demoUrl: "#",
+    image: dashPbiSales,
+  },
+  {
+    title: "Sales Performance — Power BI (Dark)",
+    description:
+      "Dark-themed Power BI dashboard with KPI gauges, territory breakdowns, deal-size analysis and quantity-by-state visuals for $1.9M total sales.",
+    tags: ["Power BI", "SQL", "Data Analysis"],
+    codeUrl: `${GITHUB_URL}`,
+    demoUrl: "#",
+    image: dashPbiDark,
+  },
+  {
+    title: "Sales Analyze — Excel Dashboard",
+    description:
+      "Interactive Excel dashboard analyzing $2.29M in sales across categories, quarters and U.S. regions with slicers, donut charts and Top-10 product ranking.",
+    tags: ["Python", "SQL", "Data Analysis", "EDA"],
+    codeUrl: `${GITHUB_URL}`,
+    demoUrl: "#",
+    image: dashExcelSales,
+  },
+  {
+    title: "Strategic Growth Map — Excel BI",
+    description:
+      "Regional performance & shipping-mode analysis with discount impact, time-based trends and category-level breakdown across European markets.",
+    tags: ["Python", "SQL", "Data Analysis"],
+    codeUrl: `${GITHUB_URL}`,
+    demoUrl: "#",
+    image: dashExcelStrategic,
+  },
+  {
+    title: "Pizza Sales Performance Dashboard",
+    description:
+      "Excel BI dashboard tracking 479K pizza sales across sizes, products and time — including monthly trend, category mix and product-level KPIs.",
+    tags: ["Python", "SQL", "Data Analysis", "EDA"],
+    codeUrl: `${GITHUB_URL}`,
+    demoUrl: "#",
+    image: dashExcelPizza,
+  },
+  {
+    title: "Orange ML — Visual Workflow",
+    description:
+      "End-to-end Orange data-mining workflow combining file ingestion, feature statistics, scatter plot, sieve diagram and Python-script nodes for EDA.",
+    tags: ["Machine Learning", "Data Analysis", "EDA", "Algorithms", "AI"],
+    codeUrl: `${GITHUB_URL}`,
+    demoUrl: "#",
+    image: dashOrangeWf,
+  },
+  {
+    title: "HR Workforce Analytics — Excel",
+    description:
+      "Workforce dashboard for 300 employees: salary breakdown, gender split, country map (Saudi/Egypt/Iraq), department mix and hiring-date timeline.",
+    tags: ["Python", "SQL", "Data Analysis"],
+    codeUrl: `${GITHUB_URL}`,
+    demoUrl: "#",
+    image: dashExcelHrMax,
+  },
+  {
+    title: "HR Salary & Workforce Analytics",
+    description:
+      "Orange-themed Excel dashboard for HR analytics — total salary, average experience, payment-method mix and net-salary trend by hire year.",
+    tags: ["Python", "SQL", "Data Analysis", "EDA"],
+    codeUrl: `${GITHUB_URL}`,
+    demoUrl: "#",
+    image: dashExcelHrOrange,
+  },
+
+  // ---------- AI / Data Science projects ----------
   {
     title: "UK Road Accident Severity Analysis",
     description:
@@ -274,6 +349,7 @@ const aiProjects = [
     tags: ["Python", "Machine Learning", "Classification", "Data Analysis", "EDA"],
     codeUrl: `${GITHUB_URL}`,
     demoUrl: "#",
+    image: imgUkAccidents,
   },
   {
     title: "Student Performance Statistical Analysis",
@@ -282,6 +358,7 @@ const aiProjects = [
     tags: ["Python", "Data Analysis", "EDA", "SQL"],
     codeUrl: `${GITHUB_URL}`,
     demoUrl: "#",
+    image: imgStudentStats,
   },
   {
     title: "Random Password Maker & Strength Checker",
@@ -290,6 +367,7 @@ const aiProjects = [
     tags: ["Python", "Machine Learning", "Cybersecurity", "Algorithms"],
     codeUrl: `${GITHUB_URL}`,
     demoUrl: "#",
+    image: imgPasswordTool,
   },
   {
     title: "Sentiment Analysis with BERT",
@@ -298,6 +376,7 @@ const aiProjects = [
     tags: ["Python", "Deep Learning", "NLP", "BERT", "TensorFlow"],
     codeUrl: `${GITHUB_URL}`,
     demoUrl: "#",
+    image: imgBert,
   },
   {
     title: "Real-Time Object Detection",
@@ -306,6 +385,7 @@ const aiProjects = [
     tags: ["Python", "Computer Vision", "Deep Learning", "OpenCV", "AI"],
     codeUrl: `${GITHUB_URL}`,
     demoUrl: "#",
+    image: imgYolo,
   },
   {
     title: "Customer Segmentation (K-Means)",
@@ -314,6 +394,7 @@ const aiProjects = [
     tags: ["Python", "Machine Learning", "Algorithms", "Streamlit", "Data Analysis"],
     codeUrl: `${GITHUB_URL}`,
     demoUrl: "#",
+    image: imgSegmentation,
   },
   {
     title: "Sales Forecasting with XGBoost",
@@ -322,6 +403,7 @@ const aiProjects = [
     tags: ["Python", "Machine Learning", "XGBoost", "SQL"],
     codeUrl: `${GITHUB_URL}`,
     demoUrl: "#",
+    image: imgSalesForecast,
   },
   {
     title: "Network Intrusion Detection",
@@ -330,6 +412,7 @@ const aiProjects = [
     tags: ["Python", "Machine Learning", "Cybersecurity", "Classification"],
     codeUrl: `${GITHUB_URL}`,
     demoUrl: "#",
+    image: imgIntrusion,
   },
   {
     title: "Resume Screening NLP",
@@ -338,13 +421,14 @@ const aiProjects = [
     tags: ["Python", "NLP", "Machine Learning", "AI"],
     codeUrl: `${GITHUB_URL}`,
     demoUrl: "#",
+    image: imgResume,
   },
 ];
 
 const allProjectTags = [
   "AI", "Algorithms", "BERT", "Classification", "Computer Vision", "Cybersecurity",
-  "Data Analysis", "Deep Learning", "EDA", "Machine Learning", "NLP", "OpenCV",
-  "Python", "SQL", "Streamlit", "TensorFlow", "XGBoost",
+  "Data Analysis", "Deep Learning", "EDA", "Excel Dashboards", "Machine Learning",
+  "NLP", "OpenCV", "Power BI", "Python", "SQL", "Streamlit", "TensorFlow", "XGBoost",
 ];
 const PROJECTS_PER_PAGE = 6;
 
