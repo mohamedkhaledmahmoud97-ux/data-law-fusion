@@ -1,16 +1,22 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { motion } from "framer-motion";
-import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect, useMemo } from "react";
 import {
   HiCode, HiDatabase, HiChartBar, HiAcademicCap, HiBriefcase, HiSparkles,
   HiMail, HiPhone, HiLocationMarker, HiArrowRight, HiCheckCircle, HiScale,
   HiUserGroup, HiGlobe, HiLightningBolt, HiCog, HiDocumentText, HiBadgeCheck,
-  HiExternalLink, HiChevronDown,
+  HiExternalLink, HiChevronDown, HiSearch, HiChevronLeft, HiChevronRight,
+  HiSun, HiMoon, HiCalendar, HiTrendingUp, HiCursorClick,
 } from "react-icons/hi";
 import { FaLinkedin, FaGithub, FaMicrosoft, FaUniversity, FaGoogle } from "react-icons/fa";
 import { SiPostgresql } from "react-icons/si";
 import mohamedImg from "@/assets/mohamed.png";
 import { Chatbot } from "@/components/Chatbot";
+
+const LINKEDIN_URL = "https://www.linkedin.com/in/Mohamed-Khaled-El-Shayp-b50385234";
+const GITHUB_URL = "https://github.com/MohamedKhaledElShayp";
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/xpwagnpa"; // replace with your Formspree form id
+const CALENDLY_URL = "https://calendly.com/mohamedkhaledmahmoud97/15min";
 
 export const Route = createFileRoute("/")({
   head: () => ({
