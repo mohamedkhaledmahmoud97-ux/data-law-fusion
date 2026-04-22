@@ -13,6 +13,28 @@ import { SiPostgresql } from "react-icons/si";
 import mohamedImg from "@/assets/mohamed.png";
 import { Chatbot } from "@/components/Chatbot";
 
+// Dashboard screenshots (uploaded by Mohamed — Power BI, Excel, Orange)
+import dashPbiSales from "@/assets/dashboard-powerbi-sales.png";
+import dashPbiDark from "@/assets/dashboard-powerbi-dark.png";
+import dashExcelSales from "@/assets/dashboard-excel-sales-analyze.png";
+import dashExcelStrategic from "@/assets/dashboard-excel-strategic.png";
+import dashExcelPizza from "@/assets/dashboard-excel-pizza.png";
+import dashOrangeWf from "@/assets/dashboard-orange-workflow.png";
+import dashExcelHrMax from "@/assets/dashboard-excel-hr-max.png";
+import dashExcelHrOrange from "@/assets/dashboard-excel-hr-orange.png";
+
+// AI / data-science project visuals
+import imgChurn from "@/assets/project-churn-streamlit.jpg";
+import imgUkAccidents from "@/assets/project-uk-accidents.jpg";
+import imgStudentStats from "@/assets/project-student-stats.jpg";
+import imgPasswordTool from "@/assets/project-password-tool.jpg";
+import imgBert from "@/assets/project-bert-sentiment.jpg";
+import imgYolo from "@/assets/project-yolo-detection.jpg";
+import imgSegmentation from "@/assets/project-segmentation.jpg";
+import imgSalesForecast from "@/assets/project-sales-forecast.jpg";
+import imgIntrusion from "@/assets/project-intrusion-detection.jpg";
+import imgResume from "@/assets/project-resume-nlp.jpg";
+
 const LINKEDIN_URL = "https://www.linkedin.com/in/Mohamed-Khaled-El-Shayp-b50385234";
 const GITHUB_URL = "https://github.com/MohamedKhaledElShayp";
 const FORMSPREE_ENDPOINT = "https://formspree.io/f/xpwagnpa"; // replace with your Formspree form id
