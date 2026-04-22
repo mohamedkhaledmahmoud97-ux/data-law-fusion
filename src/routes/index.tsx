@@ -13,6 +13,28 @@ import { SiPostgresql } from "react-icons/si";
 import mohamedImg from "@/assets/mohamed.png";
 import { Chatbot } from "@/components/Chatbot";
 
+// Dashboard screenshots (uploaded by Mohamed — Power BI, Excel, Orange)
+import dashPbiSales from "@/assets/dashboard-powerbi-sales.png";
+import dashPbiDark from "@/assets/dashboard-powerbi-dark.png";
+import dashExcelSales from "@/assets/dashboard-excel-sales-analyze.png";
+import dashExcelStrategic from "@/assets/dashboard-excel-strategic.png";
+import dashExcelPizza from "@/assets/dashboard-excel-pizza.png";
+import dashOrangeWf from "@/assets/dashboard-orange-workflow.png";
+import dashExcelHrMax from "@/assets/dashboard-excel-hr-max.png";
+import dashExcelHrOrange from "@/assets/dashboard-excel-hr-orange.png";
+
+// AI / data-science project visuals
+import imgChurn from "@/assets/project-churn-streamlit.jpg";
+import imgUkAccidents from "@/assets/project-uk-accidents.jpg";
+import imgStudentStats from "@/assets/project-student-stats.jpg";
+import imgPasswordTool from "@/assets/project-password-tool.jpg";
+import imgBert from "@/assets/project-bert-sentiment.jpg";
+import imgYolo from "@/assets/project-yolo-detection.jpg";
+import imgSegmentation from "@/assets/project-segmentation.jpg";
+import imgSalesForecast from "@/assets/project-sales-forecast.jpg";
+import imgIntrusion from "@/assets/project-intrusion-detection.jpg";
+import imgResume from "@/assets/project-resume-nlp.jpg";
+
 const LINKEDIN_URL = "https://www.linkedin.com/in/Mohamed-Khaled-El-Shayp-b50385234";
 const GITHUB_URL = "https://github.com/MohamedKhaledElShayp";
 const FORMSPREE_ENDPOINT = "https://formspree.io/f/xpwagnpa"; // replace with your Formspree form id
@@ -241,9 +263,85 @@ const featuredProject = {
   codeUrl: `${GITHUB_URL}?tab=repositories`,
   demoUrl: "#",
   metric: "↑ 87% AUC · production-ready",
+  image: imgChurn,
 };
 
 const aiProjects = [
+  // ---------- Real dashboards (Power BI / Excel / Orange) ----------
+  {
+    title: "Annual Sales Report — Power BI",
+    description:
+      "Power BI executive dashboard tracking 8.8K orders & 84M total revenue across products, sectors and accounts with year-over-year analysis.",
+    tags: ["Power BI", "SQL", "Data Analysis", "EDA"],
+    codeUrl: `${GITHUB_URL}`,
+    demoUrl: "#",
+    image: dashPbiSales,
+  },
+  {
+    title: "Sales Performance — Power BI (Dark)",
+    description:
+      "Dark-themed Power BI dashboard with KPI gauges, territory breakdowns, deal-size analysis and quantity-by-state visuals for $1.9M total sales.",
+    tags: ["Power BI", "SQL", "Data Analysis"],
+    codeUrl: `${GITHUB_URL}`,
+    demoUrl: "#",
+    image: dashPbiDark,
+  },
+  {
+    title: "Sales Analyze — Excel Dashboard",
+    description:
+      "Interactive Excel dashboard analyzing $2.29M in sales across categories, quarters and U.S. regions with slicers, donut charts and Top-10 product ranking.",
+    tags: ["Python", "SQL", "Data Analysis", "EDA"],
+    codeUrl: `${GITHUB_URL}`,
+    demoUrl: "#",
+    image: dashExcelSales,
+  },
+  {
+    title: "Strategic Growth Map — Excel BI",
+    description:
+      "Regional performance & shipping-mode analysis with discount impact, time-based trends and category-level breakdown across European markets.",
+    tags: ["Python", "SQL", "Data Analysis"],
+    codeUrl: `${GITHUB_URL}`,
+    demoUrl: "#",
+    image: dashExcelStrategic,
+  },
+  {
+    title: "Pizza Sales Performance Dashboard",
+    description:
+      "Excel BI dashboard tracking 479K pizza sales across sizes, products and time — including monthly trend, category mix and product-level KPIs.",
+    tags: ["Python", "SQL", "Data Analysis", "EDA"],
+    codeUrl: `${GITHUB_URL}`,
+    demoUrl: "#",
+    image: dashExcelPizza,
+  },
+  {
+    title: "Orange ML — Visual Workflow",
+    description:
+      "End-to-end Orange data-mining workflow combining file ingestion, feature statistics, scatter plot, sieve diagram and Python-script nodes for EDA.",
+    tags: ["Machine Learning", "Data Analysis", "EDA", "Algorithms", "AI"],
+    codeUrl: `${GITHUB_URL}`,
+    demoUrl: "#",
+    image: dashOrangeWf,
+  },
+  {
+    title: "HR Workforce Analytics — Excel",
+    description:
+      "Workforce dashboard for 300 employees: salary breakdown, gender split, country map (Saudi/Egypt/Iraq), department mix and hiring-date timeline.",
+    tags: ["Python", "SQL", "Data Analysis"],
+    codeUrl: `${GITHUB_URL}`,
+    demoUrl: "#",
+    image: dashExcelHrMax,
+  },
+  {
+    title: "HR Salary & Workforce Analytics",
+    description:
+      "Orange-themed Excel dashboard for HR analytics — total salary, average experience, payment-method mix and net-salary trend by hire year.",
+    tags: ["Python", "SQL", "Data Analysis", "EDA"],
+    codeUrl: `${GITHUB_URL}`,
+    demoUrl: "#",
+    image: dashExcelHrOrange,
+  },
+
+  // ---------- AI / Data Science projects ----------
   {
     title: "UK Road Accident Severity Analysis",
     description:
@@ -251,6 +349,7 @@ const aiProjects = [
     tags: ["Python", "Machine Learning", "Classification", "Data Analysis", "EDA"],
     codeUrl: `${GITHUB_URL}`,
     demoUrl: "#",
+    image: imgUkAccidents,
   },
   {
     title: "Student Performance Statistical Analysis",
@@ -259,6 +358,7 @@ const aiProjects = [
     tags: ["Python", "Data Analysis", "EDA", "SQL"],
     codeUrl: `${GITHUB_URL}`,
     demoUrl: "#",
+    image: imgStudentStats,
   },
   {
     title: "Random Password Maker & Strength Checker",
@@ -267,6 +367,7 @@ const aiProjects = [
     tags: ["Python", "Machine Learning", "Cybersecurity", "Algorithms"],
     codeUrl: `${GITHUB_URL}`,
     demoUrl: "#",
+    image: imgPasswordTool,
   },
   {
     title: "Sentiment Analysis with BERT",
@@ -275,6 +376,7 @@ const aiProjects = [
     tags: ["Python", "Deep Learning", "NLP", "BERT", "TensorFlow"],
     codeUrl: `${GITHUB_URL}`,
     demoUrl: "#",
+    image: imgBert,
   },
   {
     title: "Real-Time Object Detection",
@@ -283,6 +385,7 @@ const aiProjects = [
     tags: ["Python", "Computer Vision", "Deep Learning", "OpenCV", "AI"],
     codeUrl: `${GITHUB_URL}`,
     demoUrl: "#",
+    image: imgYolo,
   },
   {
     title: "Customer Segmentation (K-Means)",
@@ -291,6 +394,7 @@ const aiProjects = [
     tags: ["Python", "Machine Learning", "Algorithms", "Streamlit", "Data Analysis"],
     codeUrl: `${GITHUB_URL}`,
     demoUrl: "#",
+    image: imgSegmentation,
   },
   {
     title: "Sales Forecasting with XGBoost",
@@ -299,6 +403,7 @@ const aiProjects = [
     tags: ["Python", "Machine Learning", "XGBoost", "SQL"],
     codeUrl: `${GITHUB_URL}`,
     demoUrl: "#",
+    image: imgSalesForecast,
   },
   {
     title: "Network Intrusion Detection",
@@ -307,6 +412,7 @@ const aiProjects = [
     tags: ["Python", "Machine Learning", "Cybersecurity", "Classification"],
     codeUrl: `${GITHUB_URL}`,
     demoUrl: "#",
+    image: imgIntrusion,
   },
   {
     title: "Resume Screening NLP",
@@ -315,13 +421,14 @@ const aiProjects = [
     tags: ["Python", "NLP", "Machine Learning", "AI"],
     codeUrl: `${GITHUB_URL}`,
     demoUrl: "#",
+    image: imgResume,
   },
 ];
 
 const allProjectTags = [
   "AI", "Algorithms", "BERT", "Classification", "Computer Vision", "Cybersecurity",
-  "Data Analysis", "Deep Learning", "EDA", "Machine Learning", "NLP", "OpenCV",
-  "Python", "SQL", "Streamlit", "TensorFlow", "XGBoost",
+  "Data Analysis", "Deep Learning", "EDA", "Excel Dashboards", "Machine Learning",
+  "NLP", "OpenCV", "Power BI", "Python", "SQL", "Streamlit", "TensorFlow", "XGBoost",
 ];
 const PROJECTS_PER_PAGE = 6;
 
@@ -1045,21 +1152,24 @@ function PortfolioSection() {
   return (
     <section id="portfolio" className="py-20">
       <div className="mx-auto max-w-6xl px-4">
-        {/* Header */}
+        {/* Header — centered */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mb-8 flex flex-col gap-3 md:flex-row md:items-end md:justify-between"
+          className="mb-10 flex flex-col items-center text-center"
         >
-          <div>
-            <div className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald">Portfolio</div>
-            <h2 className="mt-2 text-3xl font-bold md:text-4xl">Featured Projects</h2>
-            <p className="mt-2 max-w-2xl text-muted-foreground">
-              A showcase of production-ready AI applications, predictive models, and data-driven solutions.
-            </p>
+          <div className="text-xs font-semibold uppercase tracking-[0.3em] text-emerald">
+            Portfolio
           </div>
-          <div className="flex items-center gap-3">
+          <h2 className="mt-3 text-4xl font-bold md:text-5xl">
+            Featured <span className="text-gradient">Projects</span>
+          </h2>
+          <p className="mt-3 max-w-2xl text-muted-foreground">
+            A showcase of production-ready dashboards, AI applications, predictive
+            models and data-driven solutions — built with Power BI, Excel, Orange and Python.
+          </p>
+          <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
             <span className="inline-flex items-center gap-1.5 rounded-full glass px-3 py-1.5 text-xs font-semibold">
               <HiSparkles className="text-emerald" /> {totalProjects} Projects
             </span>
@@ -1127,18 +1237,18 @@ function PortfolioSection() {
           >
             <div className="grid md:grid-cols-2">
               {/* visual */}
-              <div className="relative aspect-video md:aspect-auto bg-gradient-to-br from-emerald/20 via-cyan/10 to-violet/20 p-6">
-                <div className="absolute inset-0 grid-bg opacity-30" />
-                <div className="relative flex h-full flex-col justify-between">
-                  <div className="inline-flex w-fit items-center gap-1.5 rounded-full bg-emerald/20 px-3 py-1 text-xs font-bold text-emerald">
-                    <HiSparkles /> FEATURED PROJECT
-                  </div>
-                  <div className="flex items-end gap-1 opacity-80">
-                    {[40, 70, 30, 90, 55, 75, 45, 85, 60, 95, 50, 80].map((h, i) => (
-                      <div key={i} style={{ height: `${h * 0.8}px` }}
-                        className={`flex-1 rounded-sm ${i % 3 === 0 ? "bg-violet/70" : i % 2 ? "bg-cyan/70" : "bg-emerald/70"}`} />
-                    ))}
-                  </div>
+              <div className="relative min-h-[260px] overflow-hidden bg-gradient-to-br from-emerald/10 via-cyan/5 to-violet/10">
+                <img
+                  src={featuredProject.image}
+                  alt={featuredProject.title}
+                  loading="lazy"
+                  width={1280}
+                  height={768}
+                  className="absolute inset-0 h-full w-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-background/10 to-transparent" />
+                <div className="absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-emerald/90 px-3 py-1 text-xs font-bold text-background backdrop-blur">
+                  <HiSparkles /> FEATURED PROJECT
                 </div>
               </div>
               {/* content */}
@@ -1193,13 +1303,15 @@ function PortfolioSection() {
                 className="group glass overflow-hidden rounded-2xl flex flex-col"
               >
                 <div className="relative aspect-video overflow-hidden bg-gradient-to-br from-emerald/15 via-cyan/10 to-violet/15">
-                  <div className="absolute inset-0 grid-bg opacity-30" />
-                  <div className="absolute bottom-3 left-3 right-3 flex h-10 items-end gap-1 opacity-60">
-                    {[40, 70, 30, 90, 55, 75, 45, 85, 60].map((h, i) => (
-                      <div key={i} style={{ height: `${h}%` }}
-                        className={`flex-1 rounded-sm ${i % 3 === 0 ? "bg-violet/70" : i % 2 ? "bg-cyan/70" : "bg-emerald/70"}`} />
-                    ))}
-                  </div>
+                  <img
+                    src={p.image}
+                    alt={p.title}
+                    loading="lazy"
+                    width={1280}
+                    height={768}
+                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent" />
                 </div>
                 <div className="flex flex-1 flex-col p-5">
                   <h3 className="font-semibold transition-colors group-hover:text-emerald">{p.title}</h3>
