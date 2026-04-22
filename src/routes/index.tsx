@@ -1,16 +1,22 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { motion } from "framer-motion";
-import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect, useMemo } from "react";
 import {
   HiCode, HiDatabase, HiChartBar, HiAcademicCap, HiBriefcase, HiSparkles,
   HiMail, HiPhone, HiLocationMarker, HiArrowRight, HiCheckCircle, HiScale,
   HiUserGroup, HiGlobe, HiLightningBolt, HiCog, HiDocumentText, HiBadgeCheck,
-  HiExternalLink, HiChevronDown,
+  HiExternalLink, HiChevronDown, HiSearch, HiChevronLeft, HiChevronRight,
+  HiSun, HiMoon, HiCalendar, HiTrendingUp, HiCursorClick,
 } from "react-icons/hi";
 import { FaLinkedin, FaGithub, FaMicrosoft, FaUniversity, FaGoogle } from "react-icons/fa";
 import { SiPostgresql } from "react-icons/si";
 import mohamedImg from "@/assets/mohamed.png";
 import { Chatbot } from "@/components/Chatbot";
+
+const LINKEDIN_URL = "https://www.linkedin.com/in/Mohamed-Khaled-El-Shayp-b50385234";
+const GITHUB_URL = "https://github.com/MohamedKhaledElShayp";
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/xpwagnpa"; // replace with your Formspree form id
+const CALENDLY_URL = "https://calendly.com/mohamedkhaledmahmoud97/15min";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -223,6 +229,102 @@ const portfolioItems = [
 
 const portfolioFilters = ["All", "Power BI", "Excel Dashboards", "Python Projects"];
 
+/* ---------- Featured Projects (AI / Data Science showcase) ---------- */
+
+const featuredProject = {
+  title: "Telco Customer Churn Prediction",
+  description:
+    "End-to-end ML pipeline to predict telecom customers at risk of churning using XGBoost and Random Forest, deployed as an interactive Streamlit application.",
+  highlight:
+    "Deployable churn prediction model enabling proactive retention strategies to protect telecom revenue.",
+  tags: ["Python", "Machine Learning", "XGBoost", "Streamlit"],
+  codeUrl: `${GITHUB_URL}?tab=repositories`,
+  demoUrl: "#",
+  metric: "↑ 87% AUC · production-ready",
+};
+
+const aiProjects = [
+  {
+    title: "UK Road Accident Severity Analysis",
+    description:
+      "Predictive ML model classifying accident severity using geospatial data, weather conditions and vehicle features, visualized on interactive Folium maps.",
+    tags: ["Python", "Machine Learning", "Classification", "Data Analysis", "EDA"],
+    codeUrl: `${GITHUB_URL}`,
+    demoUrl: "#",
+  },
+  {
+    title: "Student Performance Statistical Analysis",
+    description:
+      "Statistical investigation of factors driving student outcomes — combining SPSS hypothesis testing with Python EDA & visualization.",
+    tags: ["Python", "Data Analysis", "EDA", "SQL"],
+    codeUrl: `${GITHUB_URL}`,
+    demoUrl: "#",
+  },
+  {
+    title: "Random Password Maker & Strength Checker",
+    description:
+      "ML-based password security tool that generates strong passwords and predicts strength using a trained classifier.",
+    tags: ["Python", "Machine Learning", "Cybersecurity", "Algorithms"],
+    codeUrl: `${GITHUB_URL}`,
+    demoUrl: "#",
+  },
+  {
+    title: "Sentiment Analysis with BERT",
+    description:
+      "Fine-tuned BERT transformer for product review sentiment classification, deployed via FastAPI with batch + streaming inference.",
+    tags: ["Python", "Deep Learning", "NLP", "BERT", "TensorFlow"],
+    codeUrl: `${GITHUB_URL}`,
+    demoUrl: "#",
+  },
+  {
+    title: "Real-Time Object Detection",
+    description:
+      "Computer Vision pipeline using OpenCV + YOLO for real-time object detection in retail surveillance footage.",
+    tags: ["Python", "Computer Vision", "Deep Learning", "OpenCV", "AI"],
+    codeUrl: `${GITHUB_URL}`,
+    demoUrl: "#",
+  },
+  {
+    title: "Customer Segmentation (K-Means)",
+    description:
+      "Unsupervised clustering of e-commerce customers into actionable personas, with Streamlit dashboard for marketing teams.",
+    tags: ["Python", "Machine Learning", "Algorithms", "Streamlit", "Data Analysis"],
+    codeUrl: `${GITHUB_URL}`,
+    demoUrl: "#",
+  },
+  {
+    title: "Sales Forecasting with XGBoost",
+    description:
+      "Gradient-boosted regression model for monthly sales forecasting with feature engineering on seasonality & promotions.",
+    tags: ["Python", "Machine Learning", "XGBoost", "SQL"],
+    codeUrl: `${GITHUB_URL}`,
+    demoUrl: "#",
+  },
+  {
+    title: "Network Intrusion Detection",
+    description:
+      "Cybersecurity classifier detecting anomalous network traffic patterns using ensemble methods on the NSL-KDD dataset.",
+    tags: ["Python", "Machine Learning", "Cybersecurity", "Classification"],
+    codeUrl: `${GITHUB_URL}`,
+    demoUrl: "#",
+  },
+  {
+    title: "Resume Screening NLP",
+    description:
+      "NLP pipeline parsing and ranking resumes against job descriptions with TF-IDF + transformer embeddings.",
+    tags: ["Python", "NLP", "Machine Learning", "AI"],
+    codeUrl: `${GITHUB_URL}`,
+    demoUrl: "#",
+  },
+];
+
+const allProjectTags = [
+  "AI", "Algorithms", "BERT", "Classification", "Computer Vision", "Cybersecurity",
+  "Data Analysis", "Deep Learning", "EDA", "Machine Learning", "NLP", "OpenCV",
+  "Python", "SQL", "Streamlit", "TensorFlow", "XGBoost",
+];
+const PROJECTS_PER_PAGE = 6;
+
 const education = [
   {
     icon: HiSparkles,
@@ -290,6 +392,7 @@ function Portfolio() {
       <Nav />
       <main>
         <Hero />
+        <Offer />
         <About />
         <Skills />
         <Experience />
@@ -305,11 +408,35 @@ function Portfolio() {
 }
 
 /* ============================================================
+   THEME TOGGLE
+   ============================================================ */
+
+function useTheme() {
+  const [theme, setTheme] = useState<"dark" | "light">("dark");
+  useEffect(() => {
+    const saved = (typeof window !== "undefined" && localStorage.getItem("theme")) as "dark" | "light" | null;
+    const initial = saved ?? "dark";
+    setTheme(initial);
+    document.documentElement.classList.toggle("light", initial === "light");
+    document.documentElement.classList.toggle("dark", initial === "dark");
+  }, []);
+  const toggle = () => {
+    const next = theme === "dark" ? "light" : "dark";
+    setTheme(next);
+    if (typeof window !== "undefined") localStorage.setItem("theme", next);
+    document.documentElement.classList.toggle("light", next === "light");
+    document.documentElement.classList.toggle("dark", next === "dark");
+  };
+  return { theme, toggle };
+}
+
+/* ============================================================
    NAV
    ============================================================ */
 
 function Nav() {
   const [open, setOpen] = useState(false);
+  const { theme, toggle } = useTheme();
   return (
     <header className="fixed top-0 left-0 right-0 z-40">
       <div className="mx-auto mt-4 max-w-6xl px-4">
@@ -332,19 +459,30 @@ function Nav() {
               </li>
             ))}
           </ul>
-          <a
-            href="#contact"
-            className="hidden items-center gap-1.5 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90 md:inline-flex"
-          >
-            Hire me <HiArrowRight />
-          </a>
-          <button
-            onClick={() => setOpen((o) => !o)}
-            className="rounded-lg p-2 text-foreground md:hidden"
-            aria-label="Toggle menu"
-          >
-            <HiChevronDown className={`transition-transform ${open ? "rotate-180" : ""}`} />
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={toggle}
+              aria-label="Toggle theme"
+              className="grid h-9 w-9 place-items-center rounded-lg glass text-foreground transition hover:bg-white/5"
+            >
+              {theme === "dark" ? <HiSun /> : <HiMoon />}
+            </button>
+            <a
+              href={CALENDLY_URL}
+              target="_blank"
+              rel="noreferrer"
+              className="hidden items-center gap-1.5 rounded-lg bg-gradient-to-r from-emerald to-cyan px-4 py-2 text-sm font-semibold text-background shadow-[0_0_25px_-5px] shadow-emerald transition-opacity hover:opacity-90 md:inline-flex"
+            >
+              Book Free Call <HiArrowRight />
+            </a>
+            <button
+              onClick={() => setOpen((o) => !o)}
+              className="rounded-lg p-2 text-foreground md:hidden"
+              aria-label="Toggle menu"
+            >
+              <HiChevronDown className={`transition-transform ${open ? "rotate-180" : ""}`} />
+            </button>
+          </div>
         </nav>
         {open && (
           <div className="glass mt-2 rounded-2xl p-3 md:hidden">
@@ -382,23 +520,22 @@ function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
           >
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full glass px-3 py-1 text-xs text-muted-foreground">
-              <span className="h-2 w-2 rounded-full bg-emerald animate-pulse" />
-              Available for Data & Compliance projects
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full glass px-3 py-1.5 text-xs font-medium">
+              <span className="relative flex h-2.5 w-2.5">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald opacity-75" />
+                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald" />
+              </span>
+              <span className="text-foreground">Available for Freelance</span>
+              <span className="text-muted-foreground">· Limited Slots</span>
             </div>
-            <h1 className="text-4xl font-bold leading-tight tracking-tight md:text-6xl">
-              Mohamed Khaled <br />
-              <span className="text-gradient">Mahmoud</span>
+            <h1 className="text-4xl font-bold leading-[1.05] tracking-tight md:text-6xl">
+              Turn Your Data Into <span className="text-gradient">Profit</span> Using AI Systems That Actually Work.
             </h1>
-            <p className="mt-3 text-lg md:text-xl">
-              <span className="text-foreground font-medium">Professional Data Analyst</span>
-              <span className="text-muted-foreground"> | Legal & Regulatory Insights Specialist</span>
-            </p>
-            <p className="mt-4 max-w-xl text-muted-foreground">
-              The rare intersection of <span className="text-emerald font-medium">Data Analytics</span> and{" "}
-              <span className="text-cyan font-medium">International Law</span>. I turn complex regulatory and
-              public-sector data into clear, decision-ready intelligence — with 150+ high-impact projects
-              delivered across digital transformation initiatives.
+            <p className="mt-4 max-w-xl text-base text-muted-foreground md:text-lg">
+              I'm <span className="text-foreground font-semibold">Mohamed Khaled Mahmoud</span> — a Data Scientist & Applied AI Specialist. I build AI systems that
+              <span className="text-emerald font-medium"> reduce costs</span>,
+              <span className="text-cyan font-medium"> increase revenue</span>, and
+              <span className="text-foreground font-medium"> scale your business</span> across Saudi Arabia & the Middle East.
             </p>
 
             {/* social row */}
@@ -409,10 +546,10 @@ function Hero() {
               <a href="tel:+201000525308" aria-label="Phone" className="glass grid h-10 w-10 place-items-center rounded-xl text-cyan hover:bg-white/5">
                 <HiPhone />
               </a>
-              <a href="https://www.linkedin.com/" target="_blank" rel="noreferrer" aria-label="LinkedIn" className="glass grid h-10 w-10 place-items-center rounded-xl text-cyan hover:bg-white/5">
+              <a href={LINKEDIN_URL} target="_blank" rel="noreferrer" aria-label="LinkedIn" className="glass grid h-10 w-10 place-items-center rounded-xl text-cyan hover:bg-white/5">
                 <FaLinkedin />
               </a>
-              <a href="https://github.com/" target="_blank" rel="noreferrer" aria-label="GitHub" className="glass grid h-10 w-10 place-items-center rounded-xl hover:bg-white/5">
+              <a href={GITHUB_URL} target="_blank" rel="noreferrer" aria-label="GitHub" className="glass grid h-10 w-10 place-items-center rounded-xl hover:bg-white/5">
                 <FaGithub />
               </a>
             </div>
@@ -420,10 +557,10 @@ function Hero() {
             {/* floating badges */}
             <div className="mt-6 flex flex-wrap gap-2">
               {[
+                { label: "50+ AI Models", icon: HiSparkles, c: "emerald" },
+                { label: "30+ Projects", icon: HiBriefcase, c: "cyan" },
                 { label: "LL.M International Law", icon: HiScale, c: "cyan" },
-                { label: "AI Diploma — MTC", icon: HiSparkles, c: "emerald" },
-                { label: "UN COP27 Leader", icon: HiGlobe, c: "cyan" },
-                { label: "Power BI Specialist", icon: HiChartBar, c: "emerald" },
+                { label: "UN COP27 Leader", icon: HiGlobe, c: "emerald" },
               ].map((b, i) => (
                 <motion.span
                   key={b.label}
@@ -440,16 +577,19 @@ function Hero() {
 
             <div className="mt-8 flex flex-wrap gap-3">
               <a
-                href="#portfolio"
-                className="inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-transform hover:scale-[1.02]"
+                href={CALENDLY_URL}
+                target="_blank"
+                rel="noreferrer"
+                className="group relative inline-flex items-center gap-2 overflow-hidden rounded-xl bg-gradient-to-r from-emerald to-cyan px-6 py-3 text-sm font-semibold text-background shadow-[0_0_30px_-5px] shadow-emerald transition-transform hover:scale-[1.03]"
               >
-                View Portfolio <HiArrowRight />
+                <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-white/0 via-white/30 to-white/0 transition-transform duration-700 group-hover:translate-x-full" />
+                <HiCalendar /> Book Free Call <HiArrowRight />
               </a>
               <a
-                href="#contact"
-                className="inline-flex items-center gap-2 rounded-lg glass px-5 py-2.5 text-sm font-medium hover:bg-white/5"
+                href="#portfolio"
+                className="inline-flex items-center gap-2 rounded-xl glass border border-glass-border px-6 py-3 text-sm font-semibold text-foreground hover:bg-white/5"
               >
-                <HiMail /> Get in touch
+                <HiCursorClick /> Explore Work
               </a>
             </div>
 
@@ -479,32 +619,176 @@ function Hero() {
             transition={{ duration: 0.7, delay: 0.2 }}
             className="relative mx-auto"
           >
-            <div className="absolute -inset-6 rounded-full bg-gradient-to-br from-emerald/30 to-cyan/30 blur-3xl" />
-            <div className="relative h-72 w-72 overflow-hidden rounded-full border border-glass-border glass-strong glow-emerald sm:h-80 sm:w-80 md:h-96 md:w-96 animate-float">
+            {/* glowing tech aura */}
+            <div className="absolute -inset-10 rounded-full bg-gradient-to-br from-emerald/30 via-cyan/30 to-violet/30 blur-3xl animate-pulse" />
+            {/* orbiting nodes */}
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+              className="absolute inset-0 pointer-events-none"
+            >
+              <span className="absolute left-1/2 top-0 h-2 w-2 -translate-x-1/2 rounded-full bg-emerald shadow-[0_0_15px] shadow-emerald" />
+              <span className="absolute right-0 top-1/2 h-2 w-2 -translate-y-1/2 rounded-full bg-cyan shadow-[0_0_15px] shadow-cyan" />
+              <span className="absolute left-1/2 bottom-0 h-2 w-2 -translate-x-1/2 rounded-full bg-violet shadow-[0_0_15px] shadow-violet" />
+              <span className="absolute left-0 top-1/2 h-2 w-2 -translate-y-1/2 rounded-full bg-emerald shadow-[0_0_15px] shadow-emerald" />
+            </motion.div>
+
+            <div className="relative h-72 w-72 overflow-hidden rounded-full border-2 border-emerald/40 glass-strong glow-emerald sm:h-80 sm:w-80 md:h-96 md:w-96 animate-float">
               <img
                 src={mohamedImg}
-                alt="Mohamed Khaled Mahmoud"
+                alt="Mohamed Khaled Mahmoud — Data Scientist"
                 className="h-full w-full object-cover"
                 loading="eager"
               />
             </div>
-            {/* floating chips */}
+
+            {/* floating stat cards */}
             <motion.div
               animate={{ y: [0, -8, 0] }}
               transition={{ duration: 4, repeat: Infinity }}
-              className="absolute -left-4 top-10 glass rounded-xl px-3 py-2 text-xs"
+              className="absolute -left-2 top-6 glass-strong rounded-xl px-3 py-2 text-xs shadow-xl"
             >
-              <div className="flex items-center gap-1.5"><HiDatabase className="text-emerald" /> SQL · Python</div>
+              <div className="flex items-center gap-2">
+                <div className="grid h-7 w-7 place-items-center rounded-lg bg-emerald/20">
+                  <HiSparkles className="text-emerald" />
+                </div>
+                <div>
+                  <div className="font-bold text-foreground">50+ Models</div>
+                  <div className="text-[10px] text-muted-foreground">AI / ML deployed</div>
+                </div>
+              </div>
             </motion.div>
             <motion.div
               animate={{ y: [0, 8, 0] }}
               transition={{ duration: 5, repeat: Infinity }}
-              className="absolute -right-2 bottom-12 glass rounded-xl px-3 py-2 text-xs"
+              className="absolute -right-4 top-1/3 glass-strong rounded-xl px-3 py-2 text-xs shadow-xl"
             >
-              <div className="flex items-center gap-1.5"><HiChartBar className="text-cyan" /> Power BI · DAX</div>
+              <div className="flex items-center gap-2">
+                <div className="grid h-7 w-7 place-items-center rounded-lg bg-cyan/20">
+                  <HiBriefcase className="text-cyan" />
+                </div>
+                <div>
+                  <div className="font-bold text-foreground">30+ Projects</div>
+                  <div className="text-[10px] text-muted-foreground">Production-ready</div>
+                </div>
+              </div>
+            </motion.div>
+            <motion.div
+              animate={{ y: [0, -6, 0] }}
+              transition={{ duration: 4.5, repeat: Infinity }}
+              className="absolute -right-2 bottom-10 glass-strong rounded-xl px-3 py-2 text-xs shadow-xl"
+            >
+              <div className="flex items-center gap-1.5"><HiTrendingUp className="text-violet" /> ROI-driven</div>
+            </motion.div>
+            <motion.div
+              animate={{ y: [0, 6, 0] }}
+              transition={{ duration: 5.5, repeat: Infinity }}
+              className="absolute -left-4 bottom-16 glass-strong rounded-xl px-3 py-2 text-xs shadow-xl"
+            >
+              <div className="flex items-center gap-1.5"><HiChartBar className="text-cyan" /> Power BI · Python</div>
             </motion.div>
           </motion.div>
         </div>
+      </div>
+    </section>
+  );
+}
+
+/* ============================================================
+   OFFER & LEAD MAGNET
+   ============================================================ */
+
+function Offer() {
+  const offers = [
+    {
+      icon: HiSparkles,
+      title: "Predictive ML Models",
+      desc: "Forecast churn, demand, and revenue with production-grade machine learning models tailored to your data.",
+      color: "emerald",
+    },
+    {
+      icon: HiCog,
+      title: "Automate Decisions",
+      desc: "Replace manual reporting and decision-making with AI agents and automated pipelines that work 24/7.",
+      color: "cyan",
+    },
+    {
+      icon: HiTrendingUp,
+      title: "Hidden Opportunities",
+      desc: "Uncover patterns, customer segments, and revenue streams hiding in your existing data.",
+      color: "violet",
+    },
+  ];
+  return (
+    <section id="offer" className="py-20">
+      <div className="mx-auto max-w-6xl px-4">
+        <SectionTitle
+          eyebrow="What I Do"
+          title="🚀 What I Can Do For You"
+          sub="AI systems built around your business goals — measurable, scalable, and tailored to your industry."
+        />
+
+        <div className="grid gap-5 md:grid-cols-3">
+          {offers.map((o, i) => (
+            <motion.div
+              key={o.title}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ delay: i * 0.08 }}
+              whileHover={{ y: -4 }}
+              className="glass group relative overflow-hidden rounded-2xl p-6"
+            >
+              <div className={`absolute -right-8 -top-8 h-32 w-32 rounded-full blur-3xl transition-opacity bg-${o.color}/20`} />
+              <div className="relative">
+                <div className={`grid h-12 w-12 place-items-center rounded-xl bg-gradient-to-br border border-glass-border ${
+                  o.color === "emerald" ? "from-emerald/20 to-cyan/10" :
+                  o.color === "cyan" ? "from-cyan/20 to-violet/10" : "from-violet/20 to-cyan/10"
+                }`}>
+                  <o.icon className={
+                    o.color === "emerald" ? "text-emerald h-6 w-6" :
+                    o.color === "cyan" ? "text-cyan h-6 w-6" : "text-violet h-6 w-6"
+                  } />
+                </div>
+                <h3 className="mt-4 text-lg font-semibold">{o.title}</h3>
+                <p className="mt-2 text-sm text-muted-foreground">{o.desc}</p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Lead magnet — Free Strategy Call */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mt-10 relative overflow-hidden rounded-2xl glass-strong border border-emerald/30 p-8 md:p-10"
+        >
+          <div className="absolute -top-24 -right-24 h-64 w-64 rounded-full bg-emerald/20 blur-3xl" />
+          <div className="absolute -bottom-24 -left-24 h-64 w-64 rounded-full bg-violet/20 blur-3xl" />
+          <div className="relative grid items-center gap-6 md:grid-cols-[1fr_auto]">
+            <div>
+              <div className="inline-flex items-center gap-2 rounded-full bg-emerald/10 px-3 py-1 text-xs font-semibold text-emerald">
+                <HiSparkles /> START HERE
+              </div>
+              <h3 className="mt-3 text-2xl font-bold md:text-3xl">
+                💼 Free 15-Min <span className="text-gradient">Strategy Call</span>
+              </h3>
+              <p className="mt-2 max-w-2xl text-muted-foreground">
+                Not sure what to do with your data? I'll analyze your case and give you a clear,
+                actionable plan — no obligation, no fluff.
+              </p>
+            </div>
+            <a
+              href={CALENDLY_URL}
+              target="_blank"
+              rel="noreferrer"
+              className="group inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-emerald to-cyan px-6 py-3.5 text-sm font-bold text-background shadow-[0_0_30px_-5px] shadow-emerald transition-transform hover:scale-105"
+            >
+              <HiCalendar /> Book Free Call <HiArrowRight className="transition-transform group-hover:translate-x-1" />
+            </a>
+          </div>
+        </motion.div>
       </div>
     </section>
   );
@@ -732,90 +1016,290 @@ function Experience() {
    ============================================================ */
 
 function PortfolioSection() {
-  const [filter, setFilter] = useState("All");
-  const filtered = filter === "All" ? portfolioItems : portfolioItems.filter((p) => p.category === filter);
+  const [activeTag, setActiveTag] = useState<string | null>(null);
+  const [search, setSearch] = useState("");
+  const [page, setPage] = useState(1);
+
+  const totalProjects = aiProjects.length + 1; // include featured
+
+  const filtered = useMemo(() => {
+    const q = search.trim().toLowerCase();
+    return aiProjects.filter((p) => {
+      const matchesTag = !activeTag || p.tags.includes(activeTag);
+      const matchesSearch =
+        !q ||
+        p.title.toLowerCase().includes(q) ||
+        p.description.toLowerCase().includes(q) ||
+        p.tags.some((t) => t.toLowerCase().includes(q));
+      return matchesTag && matchesSearch;
+    });
+  }, [activeTag, search]);
+
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PROJECTS_PER_PAGE));
+  const safePage = Math.min(page, totalPages);
+  const paginated = filtered.slice((safePage - 1) * PROJECTS_PER_PAGE, safePage * PROJECTS_PER_PAGE);
+
+  // reset page when filter/search changes
+  useEffect(() => { setPage(1); }, [activeTag, search]);
 
   return (
     <section id="portfolio" className="py-20">
       <div className="mx-auto max-w-6xl px-4">
-        <SectionTitle
-          eyebrow="Portfolio"
-          title="Portfolio & Dashboards"
-          sub="Selected work across Power BI, Excel, and Python — built for clarity and impact."
-        />
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mb-8 flex flex-col gap-3 md:flex-row md:items-end md:justify-between"
+        >
+          <div>
+            <div className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald">Portfolio</div>
+            <h2 className="mt-2 text-3xl font-bold md:text-4xl">Featured Projects</h2>
+            <p className="mt-2 max-w-2xl text-muted-foreground">
+              A showcase of production-ready AI applications, predictive models, and data-driven solutions.
+            </p>
+          </div>
+          <div className="flex items-center gap-3">
+            <span className="inline-flex items-center gap-1.5 rounded-full glass px-3 py-1.5 text-xs font-semibold">
+              <HiSparkles className="text-emerald" /> {totalProjects} Projects
+            </span>
+            <a
+              href={GITHUB_URL}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1.5 rounded-full glass px-3 py-1.5 text-xs font-semibold hover:bg-white/5"
+            >
+              <FaGithub /> GitHub
+            </a>
+          </div>
+        </motion.div>
 
-        {/* filters */}
-        <div className="mb-8 flex flex-wrap justify-center gap-2">
-          {portfolioFilters.map((f) => {
-            const active = filter === f;
+        {/* Search */}
+        <div className="relative mb-5">
+          <HiSearch className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground" />
+          <input
+            type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Search projects by title, description, or tags..."
+            className="w-full rounded-xl glass border border-glass-border py-3 pl-11 pr-4 text-sm text-foreground placeholder:text-muted-foreground outline-none transition focus:border-emerald/60"
+          />
+        </div>
+
+        {/* Tag chips */}
+        <div className="mb-8 flex flex-wrap gap-2">
+          <button
+            onClick={() => setActiveTag(null)}
+            className={`rounded-full px-3.5 py-1.5 text-xs font-semibold transition ${
+              !activeTag
+                ? "bg-gradient-to-r from-emerald to-cyan text-background shadow-[0_0_15px_-5px] shadow-emerald"
+                : "glass text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            All
+          </button>
+          {allProjectTags.map((t) => {
+            const active = activeTag === t;
             return (
               <button
-                key={f}
-                onClick={() => setFilter(f)}
-                className={`rounded-full px-4 py-1.5 text-sm font-medium transition-all ${
+                key={t}
+                onClick={() => setActiveTag(active ? null : t)}
+                className={`rounded-full px-3.5 py-1.5 text-xs font-medium transition ${
                   active
-                    ? "bg-gradient-to-r from-emerald to-cyan text-background shadow-[0_0_20px_-5px] shadow-emerald"
+                    ? "bg-gradient-to-r from-emerald to-cyan text-background shadow-[0_0_15px_-5px] shadow-emerald"
                     : "glass text-muted-foreground hover:text-foreground"
                 }`}
               >
-                {f}
+                {t}
               </button>
             );
           })}
         </div>
 
-        <motion.div layout className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {filtered.map((p, idx) => (
-            <motion.article
-              key={p.title}
-              layout
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ delay: idx * 0.04 }}
-              whileHover={{ y: -4 }}
-              className="group glass overflow-hidden rounded-2xl"
-            >
-              {/* aspect-video preview */}
-              <div className={`relative aspect-video overflow-hidden bg-gradient-to-br ${p.gradient}`}>
+        {/* Featured large card */}
+        {(!activeTag || featuredProject.tags.includes(activeTag)) &&
+         (!search.trim() || [featuredProject.title, featuredProject.description, ...featuredProject.tags].join(" ").toLowerCase().includes(search.trim().toLowerCase())) && (
+          <motion.article
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="group relative mb-8 overflow-hidden rounded-2xl glass-strong border border-emerald/30 p-0"
+          >
+            <div className="grid md:grid-cols-2">
+              {/* visual */}
+              <div className="relative aspect-video md:aspect-auto bg-gradient-to-br from-emerald/20 via-cyan/10 to-violet/20 p-6">
                 <div className="absolute inset-0 grid-bg opacity-30" />
-                <div className="absolute inset-0 grid place-items-center">
-                  <div className="glass-strong rounded-xl px-4 py-2 text-xs font-medium text-foreground/90">
-                    {p.category}
+                <div className="relative flex h-full flex-col justify-between">
+                  <div className="inline-flex w-fit items-center gap-1.5 rounded-full bg-emerald/20 px-3 py-1 text-xs font-bold text-emerald">
+                    <HiSparkles /> FEATURED PROJECT
+                  </div>
+                  <div className="flex items-end gap-1 opacity-80">
+                    {[40, 70, 30, 90, 55, 75, 45, 85, 60, 95, 50, 80].map((h, i) => (
+                      <div key={i} style={{ height: `${h * 0.8}px` }}
+                        className={`flex-1 rounded-sm ${i % 3 === 0 ? "bg-violet/70" : i % 2 ? "bg-cyan/70" : "bg-emerald/70"}`} />
+                    ))}
                   </div>
                 </div>
-                {/* fake chart bars decoration */}
-                <div className="absolute bottom-3 left-3 right-3 flex h-10 items-end gap-1 opacity-60">
-                  {[40, 70, 30, 90, 55, 75, 45, 85, 60].map((h, i) => (
-                    <div
-                      key={i}
-                      style={{ height: `${h}%` }}
-                      className={`flex-1 rounded-sm ${
-                        i % 2 ? "bg-cyan/70" : "bg-emerald/70"
-                      }`}
-                    />
-                  ))}
-                </div>
               </div>
-              <div className="p-5">
-                <h3 className="font-semibold transition-colors group-hover:text-emerald">{p.title}</h3>
-                <p className="mt-1.5 text-sm text-muted-foreground line-clamp-3">{p.description}</p>
-                <div className="mt-3 inline-flex items-center gap-1.5 rounded-md bg-emerald/10 px-2 py-1 text-xs font-medium text-emerald">
-                  <HiLightningBolt /> {p.metric}
+              {/* content */}
+              <div className="p-6 md:p-8">
+                <h3 className="text-xl font-bold md:text-2xl">{featuredProject.title}</h3>
+                <p className="mt-3 text-sm text-muted-foreground">{featuredProject.description}</p>
+                <div className="mt-4 rounded-xl border border-emerald/30 bg-emerald/5 p-3 text-sm">
+                  <div className="flex gap-2">
+                    <HiLightningBolt className="mt-0.5 shrink-0 text-emerald" />
+                    <span className="text-foreground/90">{featuredProject.highlight}</span>
+                  </div>
                 </div>
-                <div className="mt-3 flex flex-wrap gap-1.5">
-                  {p.stack.map((t) => (
-                    <span
-                      key={t}
-                      className="rounded-md border border-glass-border bg-white/[0.03] px-2 py-0.5 text-[11px] text-muted-foreground"
-                    >
+                <div className="mt-4 flex flex-wrap gap-1.5">
+                  {featuredProject.tags.map((t) => (
+                    <span key={t} className="rounded-md border border-emerald/30 bg-emerald/10 px-2 py-0.5 text-[11px] font-medium text-emerald">
                       {t}
                     </span>
                   ))}
                 </div>
+                <div className="mt-5 flex flex-wrap gap-2">
+                  <a href={featuredProject.codeUrl} target="_blank" rel="noreferrer"
+                    className="inline-flex items-center gap-1.5 rounded-lg glass border border-glass-border px-4 py-2 text-sm font-semibold hover:bg-white/5">
+                    <FaGithub /> View Code
+                  </a>
+                  <a href={featuredProject.demoUrl} target="_blank" rel="noreferrer"
+                    className="inline-flex items-center gap-1.5 rounded-lg bg-gradient-to-r from-emerald to-cyan px-4 py-2 text-sm font-semibold text-background hover:opacity-90">
+                    <HiExternalLink /> View Dashboard
+                  </a>
+                </div>
               </div>
-            </motion.article>
-          ))}
+            </div>
+          </motion.article>
+        )}
+
+        {/* Project grid */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={`${activeTag ?? "all"}-${search}-${safePage}`}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.25 }}
+            className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
+          >
+            {paginated.map((p, idx) => (
+              <motion.article
+                key={p.title}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: idx * 0.04 }}
+                whileHover={{ y: -4 }}
+                className="group glass overflow-hidden rounded-2xl flex flex-col"
+              >
+                <div className="relative aspect-video overflow-hidden bg-gradient-to-br from-emerald/15 via-cyan/10 to-violet/15">
+                  <div className="absolute inset-0 grid-bg opacity-30" />
+                  <div className="absolute bottom-3 left-3 right-3 flex h-10 items-end gap-1 opacity-60">
+                    {[40, 70, 30, 90, 55, 75, 45, 85, 60].map((h, i) => (
+                      <div key={i} style={{ height: `${h}%` }}
+                        className={`flex-1 rounded-sm ${i % 3 === 0 ? "bg-violet/70" : i % 2 ? "bg-cyan/70" : "bg-emerald/70"}`} />
+                    ))}
+                  </div>
+                </div>
+                <div className="flex flex-1 flex-col p-5">
+                  <h3 className="font-semibold transition-colors group-hover:text-emerald">{p.title}</h3>
+                  <p className="mt-1.5 text-sm text-muted-foreground line-clamp-3">{p.description}</p>
+                  <div className="mt-3 flex flex-wrap gap-1.5">
+                    {p.tags.slice(0, 4).map((t) => (
+                      <span key={t} className="rounded-md border border-glass-border bg-white/[0.03] px-2 py-0.5 text-[11px] text-muted-foreground">
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="mt-auto pt-4 flex gap-2">
+                    <a href={p.codeUrl} target="_blank" rel="noreferrer"
+                      className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg glass border border-glass-border px-3 py-2 text-xs font-semibold hover:bg-white/5">
+                      <FaGithub /> View Code
+                    </a>
+                    <a href={p.demoUrl} target="_blank" rel="noreferrer"
+                      className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg bg-gradient-to-r from-emerald to-cyan px-3 py-2 text-xs font-semibold text-background hover:opacity-90">
+                      <HiExternalLink /> Dashboard
+                    </a>
+                  </div>
+                </div>
+              </motion.article>
+            ))}
+          </motion.div>
+        </AnimatePresence>
+
+        {filtered.length === 0 && (
+          <div className="mt-10 rounded-2xl glass p-10 text-center">
+            <HiSearch className="mx-auto h-8 w-8 text-muted-foreground" />
+            <p className="mt-3 text-sm text-muted-foreground">
+              No projects match your search. Try clearing filters or a different keyword.
+            </p>
+          </div>
+        )}
+
+        {/* Pagination */}
+        {filtered.length > 0 && (
+          <div className="mt-10 flex flex-col items-center justify-between gap-4 sm:flex-row">
+            <p className="text-xs text-muted-foreground">
+              Showing {paginated.length} of {filtered.length} projects — Page {safePage} of {totalPages}
+            </p>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setPage((p) => Math.max(1, p - 1))}
+                disabled={safePage === 1}
+                className="inline-flex items-center gap-1 rounded-lg glass border border-glass-border px-3 py-2 text-xs font-semibold transition disabled:cursor-not-allowed disabled:opacity-40 hover:bg-white/5"
+              >
+                <HiChevronLeft /> Previous
+              </button>
+              {Array.from({ length: totalPages }).map((_, i) => {
+                const n = i + 1;
+                const active = n === safePage;
+                return (
+                  <button
+                    key={n}
+                    onClick={() => setPage(n)}
+                    className={`grid h-8 w-8 place-items-center rounded-lg text-xs font-semibold transition ${
+                      active
+                        ? "bg-gradient-to-r from-emerald to-cyan text-background shadow-[0_0_15px_-5px] shadow-emerald"
+                        : "glass text-muted-foreground hover:text-foreground"
+                    }`}
+                  >
+                    {n}
+                  </button>
+                );
+              })}
+              <button
+                onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                disabled={safePage === totalPages}
+                className="inline-flex items-center gap-1 rounded-lg glass border border-glass-border px-3 py-2 text-xs font-semibold transition disabled:cursor-not-allowed disabled:opacity-40 hover:bg-white/5"
+              >
+                Next <HiChevronRight />
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* End-of-section CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mt-12 relative overflow-hidden rounded-2xl glass-strong border border-violet/30 p-8 text-center"
+        >
+          <div className="absolute -top-20 left-1/2 h-40 w-80 -translate-x-1/2 rounded-full bg-violet/20 blur-3xl" />
+          <div className="relative">
+            <h3 className="text-2xl font-bold md:text-3xl">
+              Want similar results <span className="text-gradient">for your business?</span>
+            </h3>
+            <p className="mt-2 text-muted-foreground">
+              Let's build a custom AI solution tailored to your needs.
+            </p>
+            <a
+              href="#contact"
+              className="mt-5 inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-emerald via-cyan to-violet px-6 py-3 text-sm font-bold text-background shadow-[0_0_30px_-5px] shadow-violet transition-transform hover:scale-105"
+            >
+              <HiSparkles /> Start Your Project <HiArrowRight />
+            </a>
+          </div>
         </motion.div>
       </div>
     </section>
@@ -957,82 +1441,154 @@ function Certifications() {
    ============================================================ */
 
 function Contact() {
+  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
+  const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [errors, setErrors] = useState<{ name?: string; email?: string; message?: string }>({});
+
+  const validate = () => {
+    const e: typeof errors = {};
+    if (!form.name.trim() || form.name.length > 100) e.name = "Please enter your name (max 100 chars)";
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email) || form.email.length > 255) e.email = "Please enter a valid email";
+    if (!form.message.trim() || form.message.length > 1000) e.message = "Message is required (max 1000 chars)";
+    setErrors(e);
+    return Object.keys(e).length === 0;
+  };
+
+  const onSubmit = async (ev: React.FormEvent) => {
+    ev.preventDefault();
+    if (!validate()) return;
+    setStatus("sending");
+    try {
+      const res = await fetch(FORMSPREE_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(form),
+      });
+      if (!res.ok) throw new Error("Failed");
+      if (typeof window !== "undefined" && (window as any).gtag) {
+        (window as any).gtag("event", "lead_submit", { event_category: "contact" });
+      }
+      setStatus("success");
+      setForm({ name: "", email: "", message: "" });
+    } catch {
+      setStatus("error");
+    }
+  };
+
   return (
     <section id="contact" className="py-20">
-      <div className="mx-auto max-w-4xl px-4">
+      <div className="mx-auto max-w-5xl px-4">
         <SectionTitle
           eyebrow="Contact"
-          title="Let's build something that matters"
-          sub="Open to data analytics, BI consulting, and legal-tech opportunities."
+          title="Let's build your AI advantage"
+          sub="Tell me about your project — I reply within 24 hours."
         />
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="glass-strong relative overflow-hidden rounded-2xl p-8 text-center"
-        >
-          <div className="absolute -top-20 left-1/2 h-40 w-80 -translate-x-1/2 rounded-full bg-emerald/20 blur-3xl" />
-          <div className="relative">
-            <div className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-emerald to-cyan text-background">
-              <HiMail className="h-6 w-6" />
+        <div className="grid gap-6 md:grid-cols-[1fr_1.2fr]">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="glass-strong relative overflow-hidden rounded-2xl p-6"
+          >
+            <div className="absolute -top-20 -right-20 h-40 w-40 rounded-full bg-emerald/20 blur-3xl" />
+            <div className="relative">
+              <div className="grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br from-emerald to-cyan text-background">
+                <HiMail className="h-6 w-6" />
+              </div>
+              <h3 className="mt-4 text-xl font-semibold">Get in touch</h3>
+              <p className="mt-1 text-sm text-muted-foreground">Reply within 24 hours · Cairo, Egypt · Serving KSA & MENA</p>
+              <div className="mt-5 space-y-2.5">
+                <a href="mailto:mohamedkhaledmahmoud97@gmail.com" className="glass flex items-center gap-3 rounded-xl p-3 hover:bg-white/5">
+                  <HiMail className="text-emerald" />
+                  <div>
+                    <div className="text-[11px] uppercase tracking-wider text-muted-foreground">Email</div>
+                    <div className="text-sm font-medium break-all">mohamedkhaledmahmoud97@gmail.com</div>
+                  </div>
+                </a>
+                <a href="tel:+201000525308" className="glass flex items-center gap-3 rounded-xl p-3 hover:bg-white/5">
+                  <HiPhone className="text-cyan" />
+                  <div>
+                    <div className="text-[11px] uppercase tracking-wider text-muted-foreground">Phone</div>
+                    <div className="text-sm font-medium">+20 100 052 5308</div>
+                  </div>
+                </a>
+                <a href={CALENDLY_URL} target="_blank" rel="noreferrer" className="flex items-center gap-3 rounded-xl bg-gradient-to-r from-emerald/15 to-cyan/15 border border-emerald/30 p-3 hover:from-emerald/25 hover:to-cyan/25">
+                  <HiCalendar className="text-emerald" />
+                  <div>
+                    <div className="text-[11px] uppercase tracking-wider text-emerald">Free Strategy Call</div>
+                    <div className="text-sm font-semibold">Book a 15-min slot →</div>
+                  </div>
+                </a>
+              </div>
+              <div className="mt-5 flex gap-2">
+                <a href={LINKEDIN_URL} target="_blank" rel="noreferrer" className="glass grid h-10 w-10 place-items-center rounded-xl hover:bg-white/5" aria-label="LinkedIn"><FaLinkedin className="text-cyan" /></a>
+                <a href={GITHUB_URL} target="_blank" rel="noreferrer" className="glass grid h-10 w-10 place-items-center rounded-xl hover:bg-white/5" aria-label="GitHub"><FaGithub /></a>
+                <a href="mailto:mohamedkhaledmahmoud97@gmail.com" className="glass grid h-10 w-10 place-items-center rounded-xl hover:bg-white/5" aria-label="Email"><HiMail className="text-emerald" /></a>
+              </div>
             </div>
-            <h3 className="mt-4 text-2xl font-semibold">Get in touch</h3>
-            <p className="mt-2 text-muted-foreground">
-              Reply within 24 hours · Cairo, Egypt
-            </p>
+          </motion.div>
 
-            <div className="mt-6 grid gap-3 sm:grid-cols-2">
-              <a
-                href="mailto:mohamedkhaledmahmoud97@gmail.com"
-                className="glass flex items-center gap-3 rounded-xl p-4 text-left transition-colors hover:bg-white/5"
-              >
-                <HiMail className="text-emerald" />
-                <div>
-                  <div className="text-xs text-muted-foreground">Email</div>
-                  <div className="text-sm font-medium">mohamedkhaledmahmoud97@gmail.com</div>
-                </div>
-              </a>
-              <a
-                href="tel:+201000525308"
-                className="glass flex items-center gap-3 rounded-xl p-4 text-left transition-colors hover:bg-white/5"
-              >
-                <HiPhone className="text-cyan" />
-                <div>
-                  <div className="text-xs text-muted-foreground">Phone</div>
-                  <div className="text-sm font-medium">+20 100 052 5308</div>
-                </div>
-              </a>
-            </div>
+          <motion.form
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            onSubmit={onSubmit}
+            className="glass-strong rounded-2xl p-6"
+            noValidate
+          >
+            <div className="grid gap-4">
+              <div>
+                <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Name</label>
+                <input
+                  type="text" value={form.name} maxLength={100}
+                  onChange={(e) => setForm({ ...form, name: e.target.value })}
+                  className="mt-1.5 w-full rounded-xl glass border border-glass-border px-4 py-3 text-sm text-foreground outline-none focus:border-emerald/60"
+                  placeholder="Your full name"
+                />
+                {errors.name && <p className="mt-1 text-xs text-destructive">{errors.name}</p>}
+              </div>
+              <div>
+                <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Email</label>
+                <input
+                  type="email" value={form.email} maxLength={255}
+                  onChange={(e) => setForm({ ...form, email: e.target.value })}
+                  className="mt-1.5 w-full rounded-xl glass border border-glass-border px-4 py-3 text-sm text-foreground outline-none focus:border-emerald/60"
+                  placeholder="you@company.com"
+                />
+                {errors.email && <p className="mt-1 text-xs text-destructive">{errors.email}</p>}
+              </div>
+              <div>
+                <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Message</label>
+                <textarea
+                  value={form.message} maxLength={1000} rows={5}
+                  onChange={(e) => setForm({ ...form, message: e.target.value })}
+                  className="mt-1.5 w-full rounded-xl glass border border-glass-border px-4 py-3 text-sm text-foreground outline-none focus:border-emerald/60 resize-none"
+                  placeholder="Tell me about your project, data, or AI goals..."
+                />
+                {errors.message && <p className="mt-1 text-xs text-destructive">{errors.message}</p>}
+                <p className="mt-1 text-[10px] text-muted-foreground text-right">{form.message.length}/1000</p>
+              </div>
 
-            <div className="mt-6 flex justify-center gap-3">
-              <a
-                href="https://www.linkedin.com/"
-                target="_blank"
-                rel="noreferrer"
-                className="glass grid h-11 w-11 place-items-center rounded-xl transition-colors hover:bg-white/5"
-                aria-label="LinkedIn"
+              <button
+                type="submit" disabled={status === "sending"}
+                className="group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-xl bg-gradient-to-r from-emerald to-cyan px-6 py-3.5 text-sm font-bold text-background shadow-[0_0_30px_-5px] shadow-emerald hover:scale-[1.02] disabled:opacity-60"
               >
-                <FaLinkedin className="text-cyan" />
-              </a>
-              <a
-                href="https://github.com/"
-                target="_blank"
-                rel="noreferrer"
-                className="glass grid h-11 w-11 place-items-center rounded-xl transition-colors hover:bg-white/5"
-                aria-label="GitHub"
-              >
-                <FaGithub />
-              </a>
-              <a
-                href="mailto:mohamedkhaledmahmoud97@gmail.com"
-                className="glass grid h-11 w-11 place-items-center rounded-xl transition-colors hover:bg-white/5"
-                aria-label="Email"
-              >
-                <HiMail className="text-emerald" />
-              </a>
+                {status === "sending" ? "Sending..." : (<><HiMail /> Send Message <HiArrowRight className="transition-transform group-hover:translate-x-1" /></>)}
+              </button>
+
+              {status === "success" && (
+                <div className="rounded-xl border border-emerald/40 bg-emerald/10 p-3 text-sm text-emerald">
+                  ✅ Thanks! Your message has been sent. I'll reply within 24 hours.
+                </div>
+              )}
+              {status === "error" && (
+                <div className="rounded-xl border border-destructive/40 bg-destructive/10 p-3 text-sm text-destructive">
+                  Something went wrong. Please email me directly at mohamedkhaledmahmoud97@gmail.com.
+                </div>
+              )}
             </div>
-          </div>
-        </motion.div>
+          </motion.form>
+        </div>
       </div>
     </section>
   );
@@ -1061,8 +1617,8 @@ function Footer() {
     "AI-Powered Reporting",
   ];
   const socials = [
-    { Icon: FaLinkedin, href: "https://www.linkedin.com/", label: "LinkedIn", color: "hover:text-cyan hover:border-cyan/60" },
-    { Icon: FaGithub, href: "https://github.com/", label: "GitHub", color: "hover:text-foreground hover:border-foreground/60" },
+    { Icon: FaLinkedin, href: LINKEDIN_URL, label: "LinkedIn", color: "hover:text-cyan hover:border-cyan/60" },
+    { Icon: FaGithub, href: GITHUB_URL, label: "GitHub", color: "hover:text-foreground hover:border-foreground/60" },
     { Icon: HiMail, href: "mailto:mohamedkhaledmahmoud97@gmail.com", label: "Email", color: "hover:text-emerald hover:border-emerald/60" },
     { Icon: HiPhone, href: "tel:+201000525308", label: "Phone", color: "hover:text-violet hover:border-violet/60" },
   ];
