@@ -1152,21 +1152,24 @@ function PortfolioSection() {
   return (
     <section id="portfolio" className="py-20">
       <div className="mx-auto max-w-6xl px-4">
-        {/* Header */}
+        {/* Header — centered */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mb-8 flex flex-col gap-3 md:flex-row md:items-end md:justify-between"
+          className="mb-10 flex flex-col items-center text-center"
         >
-          <div>
-            <div className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald">Portfolio</div>
-            <h2 className="mt-2 text-3xl font-bold md:text-4xl">Featured Projects</h2>
-            <p className="mt-2 max-w-2xl text-muted-foreground">
-              A showcase of production-ready AI applications, predictive models, and data-driven solutions.
-            </p>
+          <div className="text-xs font-semibold uppercase tracking-[0.3em] text-emerald">
+            Portfolio
           </div>
-          <div className="flex items-center gap-3">
+          <h2 className="mt-3 text-4xl font-bold md:text-5xl">
+            Featured <span className="text-gradient">Projects</span>
+          </h2>
+          <p className="mt-3 max-w-2xl text-muted-foreground">
+            A showcase of production-ready dashboards, AI applications, predictive
+            models and data-driven solutions — built with Power BI, Excel, Orange and Python.
+          </p>
+          <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
             <span className="inline-flex items-center gap-1.5 rounded-full glass px-3 py-1.5 text-xs font-semibold">
               <HiSparkles className="text-emerald" /> {totalProjects} Projects
             </span>
