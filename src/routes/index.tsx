@@ -1617,8 +1617,8 @@ function Footer() {
     "AI-Powered Reporting",
   ];
   const socials = [
-    { Icon: FaLinkedin, href: "https://www.linkedin.com/", label: "LinkedIn", color: "hover:text-cyan hover:border-cyan/60" },
-    { Icon: FaGithub, href: "https://github.com/", label: "GitHub", color: "hover:text-foreground hover:border-foreground/60" },
+    { Icon: FaLinkedin, href: LINKEDIN_URL, label: "LinkedIn", color: "hover:text-cyan hover:border-cyan/60" },
+    { Icon: FaGithub, href: GITHUB_URL, label: "GitHub", color: "hover:text-foreground hover:border-foreground/60" },
     { Icon: HiMail, href: "mailto:mohamedkhaledmahmoud97@gmail.com", label: "Email", color: "hover:text-emerald hover:border-emerald/60" },
     { Icon: HiPhone, href: "tel:+201000525308", label: "Phone", color: "hover:text-violet hover:border-violet/60" },
   ];
