@@ -1441,82 +1441,154 @@ function Certifications() {
    ============================================================ */
 
 function Contact() {
+  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
+  const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [errors, setErrors] = useState<{ name?: string; email?: string; message?: string }>({});
+
+  const validate = () => {
+    const e: typeof errors = {};
+    if (!form.name.trim() || form.name.length > 100) e.name = "Please enter your name (max 100 chars)";
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email) || form.email.length > 255) e.email = "Please enter a valid email";
+    if (!form.message.trim() || form.message.length > 1000) e.message = "Message is required (max 1000 chars)";
+    setErrors(e);
+    return Object.keys(e).length === 0;
+  };
+
+  const onSubmit = async (ev: React.FormEvent) => {
+    ev.preventDefault();
+    if (!validate()) return;
+    setStatus("sending");
+    try {
+      const res = await fetch(FORMSPREE_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(form),
+      });
+      if (!res.ok) throw new Error("Failed");
+      if (typeof window !== "undefined" && (window as any).gtag) {
+        (window as any).gtag("event", "lead_submit", { event_category: "contact" });
+      }
+      setStatus("success");
+      setForm({ name: "", email: "", message: "" });
+    } catch {
+      setStatus("error");
+    }
+  };
+
   return (
     <section id="contact" className="py-20">
-      <div className="mx-auto max-w-4xl px-4">
+      <div className="mx-auto max-w-5xl px-4">
         <SectionTitle
           eyebrow="Contact"
-          title="Let's build something that matters"
-          sub="Open to data analytics, BI consulting, and legal-tech opportunities."
+          title="Let's build your AI advantage"
+          sub="Tell me about your project — I reply within 24 hours."
         />
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="glass-strong relative overflow-hidden rounded-2xl p-8 text-center"
-        >
-          <div className="absolute -top-20 left-1/2 h-40 w-80 -translate-x-1/2 rounded-full bg-emerald/20 blur-3xl" />
-          <div className="relative">
-            <div className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-emerald to-cyan text-background">
-              <HiMail className="h-6 w-6" />
+        <div className="grid gap-6 md:grid-cols-[1fr_1.2fr]">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="glass-strong relative overflow-hidden rounded-2xl p-6"
+          >
+            <div className="absolute -top-20 -right-20 h-40 w-40 rounded-full bg-emerald/20 blur-3xl" />
+            <div className="relative">
+              <div className="grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br from-emerald to-cyan text-background">
+                <HiMail className="h-6 w-6" />
+              </div>
+              <h3 className="mt-4 text-xl font-semibold">Get in touch</h3>
+              <p className="mt-1 text-sm text-muted-foreground">Reply within 24 hours · Cairo, Egypt · Serving KSA & MENA</p>
+              <div className="mt-5 space-y-2.5">
+                <a href="mailto:mohamedkhaledmahmoud97@gmail.com" className="glass flex items-center gap-3 rounded-xl p-3 hover:bg-white/5">
+                  <HiMail className="text-emerald" />
+                  <div>
+                    <div className="text-[11px] uppercase tracking-wider text-muted-foreground">Email</div>
+                    <div className="text-sm font-medium break-all">mohamedkhaledmahmoud97@gmail.com</div>
+                  </div>
+                </a>
+                <a href="tel:+201000525308" className="glass flex items-center gap-3 rounded-xl p-3 hover:bg-white/5">
+                  <HiPhone className="text-cyan" />
+                  <div>
+                    <div className="text-[11px] uppercase tracking-wider text-muted-foreground">Phone</div>
+                    <div className="text-sm font-medium">+20 100 052 5308</div>
+                  </div>
+                </a>
+                <a href={CALENDLY_URL} target="_blank" rel="noreferrer" className="flex items-center gap-3 rounded-xl bg-gradient-to-r from-emerald/15 to-cyan/15 border border-emerald/30 p-3 hover:from-emerald/25 hover:to-cyan/25">
+                  <HiCalendar className="text-emerald" />
+                  <div>
+                    <div className="text-[11px] uppercase tracking-wider text-emerald">Free Strategy Call</div>
+                    <div className="text-sm font-semibold">Book a 15-min slot →</div>
+                  </div>
+                </a>
+              </div>
+              <div className="mt-5 flex gap-2">
+                <a href={LINKEDIN_URL} target="_blank" rel="noreferrer" className="glass grid h-10 w-10 place-items-center rounded-xl hover:bg-white/5" aria-label="LinkedIn"><FaLinkedin className="text-cyan" /></a>
+                <a href={GITHUB_URL} target="_blank" rel="noreferrer" className="glass grid h-10 w-10 place-items-center rounded-xl hover:bg-white/5" aria-label="GitHub"><FaGithub /></a>
+                <a href="mailto:mohamedkhaledmahmoud97@gmail.com" className="glass grid h-10 w-10 place-items-center rounded-xl hover:bg-white/5" aria-label="Email"><HiMail className="text-emerald" /></a>
+              </div>
             </div>
-            <h3 className="mt-4 text-2xl font-semibold">Get in touch</h3>
-            <p className="mt-2 text-muted-foreground">
-              Reply within 24 hours · Cairo, Egypt
-            </p>
+          </motion.div>
 
-            <div className="mt-6 grid gap-3 sm:grid-cols-2">
-              <a
-                href="mailto:mohamedkhaledmahmoud97@gmail.com"
-                className="glass flex items-center gap-3 rounded-xl p-4 text-left transition-colors hover:bg-white/5"
-              >
-                <HiMail className="text-emerald" />
-                <div>
-                  <div className="text-xs text-muted-foreground">Email</div>
-                  <div className="text-sm font-medium">mohamedkhaledmahmoud97@gmail.com</div>
-                </div>
-              </a>
-              <a
-                href="tel:+201000525308"
-                className="glass flex items-center gap-3 rounded-xl p-4 text-left transition-colors hover:bg-white/5"
-              >
-                <HiPhone className="text-cyan" />
-                <div>
-                  <div className="text-xs text-muted-foreground">Phone</div>
-                  <div className="text-sm font-medium">+20 100 052 5308</div>
-                </div>
-              </a>
-            </div>
+          <motion.form
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            onSubmit={onSubmit}
+            className="glass-strong rounded-2xl p-6"
+            noValidate
+          >
+            <div className="grid gap-4">
+              <div>
+                <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Name</label>
+                <input
+                  type="text" value={form.name} maxLength={100}
+                  onChange={(e) => setForm({ ...form, name: e.target.value })}
+                  className="mt-1.5 w-full rounded-xl glass border border-glass-border px-4 py-3 text-sm text-foreground outline-none focus:border-emerald/60"
+                  placeholder="Your full name"
+                />
+                {errors.name && <p className="mt-1 text-xs text-destructive">{errors.name}</p>}
+              </div>
+              <div>
+                <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Email</label>
+                <input
+                  type="email" value={form.email} maxLength={255}
+                  onChange={(e) => setForm({ ...form, email: e.target.value })}
+                  className="mt-1.5 w-full rounded-xl glass border border-glass-border px-4 py-3 text-sm text-foreground outline-none focus:border-emerald/60"
+                  placeholder="you@company.com"
+                />
+                {errors.email && <p className="mt-1 text-xs text-destructive">{errors.email}</p>}
+              </div>
+              <div>
+                <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Message</label>
+                <textarea
+                  value={form.message} maxLength={1000} rows={5}
+                  onChange={(e) => setForm({ ...form, message: e.target.value })}
+                  className="mt-1.5 w-full rounded-xl glass border border-glass-border px-4 py-3 text-sm text-foreground outline-none focus:border-emerald/60 resize-none"
+                  placeholder="Tell me about your project, data, or AI goals..."
+                />
+                {errors.message && <p className="mt-1 text-xs text-destructive">{errors.message}</p>}
+                <p className="mt-1 text-[10px] text-muted-foreground text-right">{form.message.length}/1000</p>
+              </div>
 
-            <div className="mt-6 flex justify-center gap-3">
-              <a
-                href="https://www.linkedin.com/"
-                target="_blank"
-                rel="noreferrer"
-                className="glass grid h-11 w-11 place-items-center rounded-xl transition-colors hover:bg-white/5"
-                aria-label="LinkedIn"
+              <button
+                type="submit" disabled={status === "sending"}
+                className="group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-xl bg-gradient-to-r from-emerald to-cyan px-6 py-3.5 text-sm font-bold text-background shadow-[0_0_30px_-5px] shadow-emerald hover:scale-[1.02] disabled:opacity-60"
               >
-                <FaLinkedin className="text-cyan" />
-              </a>
-              <a
-                href="https://github.com/"
-                target="_blank"
-                rel="noreferrer"
-                className="glass grid h-11 w-11 place-items-center rounded-xl transition-colors hover:bg-white/5"
-                aria-label="GitHub"
-              >
-                <FaGithub />
-              </a>
-              <a
-                href="mailto:mohamedkhaledmahmoud97@gmail.com"
-                className="glass grid h-11 w-11 place-items-center rounded-xl transition-colors hover:bg-white/5"
-                aria-label="Email"
-              >
-                <HiMail className="text-emerald" />
-              </a>
+                {status === "sending" ? "Sending..." : (<><HiMail /> Send Message <HiArrowRight className="transition-transform group-hover:translate-x-1" /></>)}
+              </button>
+
+              {status === "success" && (
+                <div className="rounded-xl border border-emerald/40 bg-emerald/10 p-3 text-sm text-emerald">
+                  ✅ Thanks! Your message has been sent. I'll reply within 24 hours.
+                </div>
+              )}
+              {status === "error" && (
+                <div className="rounded-xl border border-destructive/40 bg-destructive/10 p-3 text-sm text-destructive">
+                  Something went wrong. Please email me directly at mohamedkhaledmahmoud97@gmail.com.
+                </div>
+              )}
             </div>
-          </div>
-        </motion.div>
+          </motion.form>
+        </div>
       </div>
     </section>
   );
