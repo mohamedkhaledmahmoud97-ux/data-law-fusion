@@ -619,32 +619,176 @@ function Hero() {
             transition={{ duration: 0.7, delay: 0.2 }}
             className="relative mx-auto"
           >
-            <div className="absolute -inset-6 rounded-full bg-gradient-to-br from-emerald/30 to-cyan/30 blur-3xl" />
-            <div className="relative h-72 w-72 overflow-hidden rounded-full border border-glass-border glass-strong glow-emerald sm:h-80 sm:w-80 md:h-96 md:w-96 animate-float">
+            {/* glowing tech aura */}
+            <div className="absolute -inset-10 rounded-full bg-gradient-to-br from-emerald/30 via-cyan/30 to-violet/30 blur-3xl animate-pulse" />
+            {/* orbiting nodes */}
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+              className="absolute inset-0 pointer-events-none"
+            >
+              <span className="absolute left-1/2 top-0 h-2 w-2 -translate-x-1/2 rounded-full bg-emerald shadow-[0_0_15px] shadow-emerald" />
+              <span className="absolute right-0 top-1/2 h-2 w-2 -translate-y-1/2 rounded-full bg-cyan shadow-[0_0_15px] shadow-cyan" />
+              <span className="absolute left-1/2 bottom-0 h-2 w-2 -translate-x-1/2 rounded-full bg-violet shadow-[0_0_15px] shadow-violet" />
+              <span className="absolute left-0 top-1/2 h-2 w-2 -translate-y-1/2 rounded-full bg-emerald shadow-[0_0_15px] shadow-emerald" />
+            </motion.div>
+
+            <div className="relative h-72 w-72 overflow-hidden rounded-full border-2 border-emerald/40 glass-strong glow-emerald sm:h-80 sm:w-80 md:h-96 md:w-96 animate-float">
               <img
                 src={mohamedImg}
-                alt="Mohamed Khaled Mahmoud"
+                alt="Mohamed Khaled Mahmoud — Data Scientist"
                 className="h-full w-full object-cover"
                 loading="eager"
               />
             </div>
-            {/* floating chips */}
+
+            {/* floating stat cards */}
             <motion.div
               animate={{ y: [0, -8, 0] }}
               transition={{ duration: 4, repeat: Infinity }}
-              className="absolute -left-4 top-10 glass rounded-xl px-3 py-2 text-xs"
+              className="absolute -left-2 top-6 glass-strong rounded-xl px-3 py-2 text-xs shadow-xl"
             >
-              <div className="flex items-center gap-1.5"><HiDatabase className="text-emerald" /> SQL · Python</div>
+              <div className="flex items-center gap-2">
+                <div className="grid h-7 w-7 place-items-center rounded-lg bg-emerald/20">
+                  <HiSparkles className="text-emerald" />
+                </div>
+                <div>
+                  <div className="font-bold text-foreground">50+ Models</div>
+                  <div className="text-[10px] text-muted-foreground">AI / ML deployed</div>
+                </div>
+              </div>
             </motion.div>
             <motion.div
               animate={{ y: [0, 8, 0] }}
               transition={{ duration: 5, repeat: Infinity }}
-              className="absolute -right-2 bottom-12 glass rounded-xl px-3 py-2 text-xs"
+              className="absolute -right-4 top-1/3 glass-strong rounded-xl px-3 py-2 text-xs shadow-xl"
             >
-              <div className="flex items-center gap-1.5"><HiChartBar className="text-cyan" /> Power BI · DAX</div>
+              <div className="flex items-center gap-2">
+                <div className="grid h-7 w-7 place-items-center rounded-lg bg-cyan/20">
+                  <HiBriefcase className="text-cyan" />
+                </div>
+                <div>
+                  <div className="font-bold text-foreground">30+ Projects</div>
+                  <div className="text-[10px] text-muted-foreground">Production-ready</div>
+                </div>
+              </div>
+            </motion.div>
+            <motion.div
+              animate={{ y: [0, -6, 0] }}
+              transition={{ duration: 4.5, repeat: Infinity }}
+              className="absolute -right-2 bottom-10 glass-strong rounded-xl px-3 py-2 text-xs shadow-xl"
+            >
+              <div className="flex items-center gap-1.5"><HiTrendingUp className="text-violet" /> ROI-driven</div>
+            </motion.div>
+            <motion.div
+              animate={{ y: [0, 6, 0] }}
+              transition={{ duration: 5.5, repeat: Infinity }}
+              className="absolute -left-4 bottom-16 glass-strong rounded-xl px-3 py-2 text-xs shadow-xl"
+            >
+              <div className="flex items-center gap-1.5"><HiChartBar className="text-cyan" /> Power BI · Python</div>
             </motion.div>
           </motion.div>
         </div>
+      </div>
+    </section>
+  );
+}
+
+/* ============================================================
+   OFFER & LEAD MAGNET
+   ============================================================ */
+
+function Offer() {
+  const offers = [
+    {
+      icon: HiSparkles,
+      title: "Predictive ML Models",
+      desc: "Forecast churn, demand, and revenue with production-grade machine learning models tailored to your data.",
+      color: "emerald",
+    },
+    {
+      icon: HiCog,
+      title: "Automate Decisions",
+      desc: "Replace manual reporting and decision-making with AI agents and automated pipelines that work 24/7.",
+      color: "cyan",
+    },
+    {
+      icon: HiTrendingUp,
+      title: "Hidden Opportunities",
+      desc: "Uncover patterns, customer segments, and revenue streams hiding in your existing data.",
+      color: "violet",
+    },
+  ];
+  return (
+    <section id="offer" className="py-20">
+      <div className="mx-auto max-w-6xl px-4">
+        <SectionTitle
+          eyebrow="What I Do"
+          title="🚀 What I Can Do For You"
+          sub="AI systems built around your business goals — measurable, scalable, and tailored to your industry."
+        />
+
+        <div className="grid gap-5 md:grid-cols-3">
+          {offers.map((o, i) => (
+            <motion.div
+              key={o.title}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ delay: i * 0.08 }}
+              whileHover={{ y: -4 }}
+              className="glass group relative overflow-hidden rounded-2xl p-6"
+            >
+              <div className={`absolute -right-8 -top-8 h-32 w-32 rounded-full blur-3xl transition-opacity bg-${o.color}/20`} />
+              <div className="relative">
+                <div className={`grid h-12 w-12 place-items-center rounded-xl bg-gradient-to-br border border-glass-border ${
+                  o.color === "emerald" ? "from-emerald/20 to-cyan/10" :
+                  o.color === "cyan" ? "from-cyan/20 to-violet/10" : "from-violet/20 to-cyan/10"
+                }`}>
+                  <o.icon className={
+                    o.color === "emerald" ? "text-emerald h-6 w-6" :
+                    o.color === "cyan" ? "text-cyan h-6 w-6" : "text-violet h-6 w-6"
+                  } />
+                </div>
+                <h3 className="mt-4 text-lg font-semibold">{o.title}</h3>
+                <p className="mt-2 text-sm text-muted-foreground">{o.desc}</p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Lead magnet — Free Strategy Call */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mt-10 relative overflow-hidden rounded-2xl glass-strong border border-emerald/30 p-8 md:p-10"
+        >
+          <div className="absolute -top-24 -right-24 h-64 w-64 rounded-full bg-emerald/20 blur-3xl" />
+          <div className="absolute -bottom-24 -left-24 h-64 w-64 rounded-full bg-violet/20 blur-3xl" />
+          <div className="relative grid items-center gap-6 md:grid-cols-[1fr_auto]">
+            <div>
+              <div className="inline-flex items-center gap-2 rounded-full bg-emerald/10 px-3 py-1 text-xs font-semibold text-emerald">
+                <HiSparkles /> START HERE
+              </div>
+              <h3 className="mt-3 text-2xl font-bold md:text-3xl">
+                💼 Free 15-Min <span className="text-gradient">Strategy Call</span>
+              </h3>
+              <p className="mt-2 max-w-2xl text-muted-foreground">
+                Not sure what to do with your data? I'll analyze your case and give you a clear,
+                actionable plan — no obligation, no fluff.
+              </p>
+            </div>
+            <a
+              href={CALENDLY_URL}
+              target="_blank"
+              rel="noreferrer"
+              className="group inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-emerald to-cyan px-6 py-3.5 text-sm font-bold text-background shadow-[0_0_30px_-5px] shadow-emerald transition-transform hover:scale-105"
+            >
+              <HiCalendar /> Book Free Call <HiArrowRight className="transition-transform group-hover:translate-x-1" />
+            </a>
+          </div>
+        </motion.div>
       </div>
     </section>
   );
