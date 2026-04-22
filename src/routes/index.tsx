@@ -520,23 +520,22 @@ function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
           >
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full glass px-3 py-1 text-xs text-muted-foreground">
-              <span className="h-2 w-2 rounded-full bg-emerald animate-pulse" />
-              Available for Data & Compliance projects
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full glass px-3 py-1.5 text-xs font-medium">
+              <span className="relative flex h-2.5 w-2.5">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald opacity-75" />
+                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald" />
+              </span>
+              <span className="text-foreground">Available for Freelance</span>
+              <span className="text-muted-foreground">· Limited Slots</span>
             </div>
-            <h1 className="text-4xl font-bold leading-tight tracking-tight md:text-6xl">
-              Mohamed Khaled <br />
-              <span className="text-gradient">Mahmoud</span>
+            <h1 className="text-4xl font-bold leading-[1.05] tracking-tight md:text-6xl">
+              Turn Your Data Into <span className="text-gradient">Profit</span> Using AI Systems That Actually Work.
             </h1>
-            <p className="mt-3 text-lg md:text-xl">
-              <span className="text-foreground font-medium">Professional Data Analyst</span>
-              <span className="text-muted-foreground"> | Legal & Regulatory Insights Specialist</span>
-            </p>
-            <p className="mt-4 max-w-xl text-muted-foreground">
-              The rare intersection of <span className="text-emerald font-medium">Data Analytics</span> and{" "}
-              <span className="text-cyan font-medium">International Law</span>. I turn complex regulatory and
-              public-sector data into clear, decision-ready intelligence — with 150+ high-impact projects
-              delivered across digital transformation initiatives.
+            <p className="mt-4 max-w-xl text-base text-muted-foreground md:text-lg">
+              I'm <span className="text-foreground font-semibold">Mohamed Khaled Mahmoud</span> — a Data Scientist & Applied AI Specialist. I build AI systems that
+              <span className="text-emerald font-medium"> reduce costs</span>,
+              <span className="text-cyan font-medium"> increase revenue</span>, and
+              <span className="text-foreground font-medium"> scale your business</span> across Saudi Arabia & the Middle East.
             </p>
 
             {/* social row */}
@@ -547,10 +546,10 @@ function Hero() {
               <a href="tel:+201000525308" aria-label="Phone" className="glass grid h-10 w-10 place-items-center rounded-xl text-cyan hover:bg-white/5">
                 <HiPhone />
               </a>
-              <a href="https://www.linkedin.com/" target="_blank" rel="noreferrer" aria-label="LinkedIn" className="glass grid h-10 w-10 place-items-center rounded-xl text-cyan hover:bg-white/5">
+              <a href={LINKEDIN_URL} target="_blank" rel="noreferrer" aria-label="LinkedIn" className="glass grid h-10 w-10 place-items-center rounded-xl text-cyan hover:bg-white/5">
                 <FaLinkedin />
               </a>
-              <a href="https://github.com/" target="_blank" rel="noreferrer" aria-label="GitHub" className="glass grid h-10 w-10 place-items-center rounded-xl hover:bg-white/5">
+              <a href={GITHUB_URL} target="_blank" rel="noreferrer" aria-label="GitHub" className="glass grid h-10 w-10 place-items-center rounded-xl hover:bg-white/5">
                 <FaGithub />
               </a>
             </div>
@@ -558,10 +557,10 @@ function Hero() {
             {/* floating badges */}
             <div className="mt-6 flex flex-wrap gap-2">
               {[
+                { label: "50+ AI Models", icon: HiSparkles, c: "emerald" },
+                { label: "30+ Projects", icon: HiBriefcase, c: "cyan" },
                 { label: "LL.M International Law", icon: HiScale, c: "cyan" },
-                { label: "AI Diploma — MTC", icon: HiSparkles, c: "emerald" },
-                { label: "UN COP27 Leader", icon: HiGlobe, c: "cyan" },
-                { label: "Power BI Specialist", icon: HiChartBar, c: "emerald" },
+                { label: "UN COP27 Leader", icon: HiGlobe, c: "emerald" },
               ].map((b, i) => (
                 <motion.span
                   key={b.label}
@@ -578,16 +577,19 @@ function Hero() {
 
             <div className="mt-8 flex flex-wrap gap-3">
               <a
-                href="#portfolio"
-                className="inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-transform hover:scale-[1.02]"
+                href={CALENDLY_URL}
+                target="_blank"
+                rel="noreferrer"
+                className="group relative inline-flex items-center gap-2 overflow-hidden rounded-xl bg-gradient-to-r from-emerald to-cyan px-6 py-3 text-sm font-semibold text-background shadow-[0_0_30px_-5px] shadow-emerald transition-transform hover:scale-[1.03]"
               >
-                View Portfolio <HiArrowRight />
+                <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-white/0 via-white/30 to-white/0 transition-transform duration-700 group-hover:translate-x-full" />
+                <HiCalendar /> Book Free Call <HiArrowRight />
               </a>
               <a
-                href="#contact"
-                className="inline-flex items-center gap-2 rounded-lg glass px-5 py-2.5 text-sm font-medium hover:bg-white/5"
+                href="#portfolio"
+                className="inline-flex items-center gap-2 rounded-xl glass border border-glass-border px-6 py-3 text-sm font-semibold text-foreground hover:bg-white/5"
               >
-                <HiMail /> Get in touch
+                <HiCursorClick /> Explore Work
               </a>
             </div>
 
