@@ -33,10 +33,14 @@ export const Route = createRootRoute({
       { name: "description", content: "Professional Data Analyst at MCIT. LL.M International Law. AI & Data Science specialist. 150+ projects." },
       { name: "author", content: "Mohamed Khaled Mahmoud" },
       { property: "og:title", content: "Mohamed Khaled Mahmoud — Data Analyst & AI Specialist" },
-      { property: "og:description", content: "The intersection of Data & Law. 150+ projects. UN-recognized leader." },
+      { property: "og:description", content: "Professional Data Analyst at MCIT. LL.M International Law. AI & Data Science specialist. 150+ projects." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "Mohamed Khaled Mahmoud — Data Analyst & AI Specialist" },
+      { name: "twitter:description", content: "Professional Data Analyst at MCIT. LL.M International Law. AI & Data Science specialist. 150+ projects." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/28d936db-955f-478e-984e-0ff85a4b4599/id-preview-8c4243dc--a7f1cc5e-b18d-4400-bb77-b5d75dcb5f22.lovable.app-1776850140412.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/28d936db-955f-478e-984e-0ff85a4b4599/id-preview-8c4243dc--a7f1cc5e-b18d-4400-bb77-b5d75dcb5f22.lovable.app-1776850140412.png" },
     ],
     links: [
       {
