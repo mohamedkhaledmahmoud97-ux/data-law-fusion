@@ -6,7 +6,7 @@ import {
   HiMail, HiPhone, HiLocationMarker, HiArrowRight, HiCheckCircle, HiScale,
   HiUserGroup, HiGlobe, HiLightningBolt, HiCog, HiDocumentText, HiBadgeCheck,
   HiExternalLink, HiChevronDown, HiSearch, HiChevronLeft, HiChevronRight,
-  HiSun, HiMoon, HiCalendar, HiTrendingUp, HiCursorClick,
+  HiSun, HiMoon, HiCalendar, HiTrendingUp, HiCursorClick, HiDownload,
 } from "react-icons/hi";
 import { FaLinkedin, FaGithub, FaMicrosoft, FaUniversity, FaGoogle } from "react-icons/fa";
 import { SiPostgresql } from "react-icons/si";
@@ -632,17 +632,20 @@ function Hero() {
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald opacity-75" />
                 <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald" />
               </span>
-              <span className="text-foreground">Available for Freelance</span>
-              <span className="text-muted-foreground">· Limited Slots</span>
+              <span className="text-foreground">Available For Opportunities</span>
             </div>
-            <h1 className="text-4xl font-bold leading-[1.05] tracking-tight md:text-6xl">
-              Turn Your Data Into <span className="text-gradient">Profit</span> Using AI Systems That Actually Work.
+            <p className="mb-2 text-base font-medium text-muted-foreground md:text-lg">Hi! I'm</p>
+            <h1 className="text-4xl font-bold leading-[1.05] tracking-tight md:text-6xl lg:text-7xl">
+              Mohamed Khaled <span className="text-gradient">El-Shayp</span>
             </h1>
-            <p className="mt-4 max-w-xl text-base text-muted-foreground md:text-lg">
-              I'm <span className="text-foreground font-semibold">Mohamed Khaled Mahmoud</span> — a Data Scientist & Applied AI Specialist. I build AI systems that
-              <span className="text-emerald font-medium"> reduce costs</span>,
-              <span className="text-cyan font-medium"> increase revenue</span>, and
-              <span className="text-foreground font-medium"> scale your business</span> across Saudi Arabia & the Middle East.
+            <p className="mt-5 max-w-xl text-base text-muted-foreground md:text-lg">
+              I'm a <span className="text-foreground font-semibold">Data Scientist & Applied AI Specialist</span>. I design predictive models and intelligent data pipelines that
+              <span className="text-emerald font-medium"> cut costs</span>,
+              <span className="text-cyan font-medium"> drive revenue</span>, and
+              <span className="text-foreground font-medium"> scale businesses</span>.
+            </p>
+            <p className="mt-3 max-w-xl text-sm text-muted-foreground md:text-base">
+              I help in analyzing data, proposing solutions to improve sales productivity, and organizing workflows within the company.
             </p>
 
             {/* social row */}
@@ -687,10 +690,19 @@ function Hero() {
                 href={CALENDLY_URL}
                 target="_blank"
                 rel="noreferrer"
-                className="group relative inline-flex items-center gap-2 overflow-hidden rounded-xl bg-gradient-to-r from-emerald to-cyan px-6 py-3 text-sm font-semibold text-background shadow-[0_0_30px_-5px] shadow-emerald transition-transform hover:scale-[1.03]"
+                className="group relative inline-flex animate-pulse-glow items-center gap-2 overflow-hidden rounded-xl bg-gradient-to-r from-emerald to-cyan px-7 py-3.5 text-sm font-semibold text-background shadow-[0_0_40px_-5px] shadow-emerald transition-transform hover:scale-[1.04]"
               >
                 <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-white/0 via-white/30 to-white/0 transition-transform duration-700 group-hover:translate-x-full" />
-                <HiCalendar /> Book Free Call <HiArrowRight />
+                <HiSparkles /> Hire Me <HiArrowRight />
+              </a>
+              <a
+                href="/cv.pdf"
+                target="_blank"
+                rel="noreferrer"
+                download
+                className="inline-flex items-center gap-2 rounded-xl glass-strong border border-glass-border px-6 py-3 text-sm font-semibold text-foreground hover:bg-white/5"
+              >
+                <HiDownload /> Download CV
               </a>
               <a
                 href="#portfolio"
