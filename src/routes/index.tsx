@@ -6,7 +6,7 @@ import {
   HiMail, HiPhone, HiLocationMarker, HiArrowRight, HiCheckCircle, HiScale,
   HiUserGroup, HiGlobe, HiLightningBolt, HiCog, HiDocumentText, HiBadgeCheck,
   HiExternalLink, HiChevronDown, HiSearch, HiChevronLeft, HiChevronRight,
-  HiSun, HiMoon, HiCalendar, HiTrendingUp, HiCursorClick,
+  HiSun, HiMoon, HiCalendar, HiTrendingUp, HiCursorClick, HiDownload,
 } from "react-icons/hi";
 import { FaLinkedin, FaGithub, FaMicrosoft, FaUniversity, FaGoogle } from "react-icons/fa";
 import { SiPostgresql } from "react-icons/si";
