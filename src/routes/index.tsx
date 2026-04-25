@@ -632,17 +632,20 @@ function Hero() {
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald opacity-75" />
                 <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald" />
               </span>
-              <span className="text-foreground">Available for Freelance</span>
-              <span className="text-muted-foreground">· Limited Slots</span>
+              <span className="text-foreground">Available For Opportunities</span>
             </div>
-            <h1 className="text-4xl font-bold leading-[1.05] tracking-tight md:text-6xl">
-              Turn Your Data Into <span className="text-gradient">Profit</span> Using AI Systems That Actually Work.
+            <p className="mb-2 text-base font-medium text-muted-foreground md:text-lg">Hi! I'm</p>
+            <h1 className="text-4xl font-bold leading-[1.05] tracking-tight md:text-6xl lg:text-7xl">
+              Mohamed Khaled <span className="text-gradient">El-Shayp</span>
             </h1>
-            <p className="mt-4 max-w-xl text-base text-muted-foreground md:text-lg">
-              I'm <span className="text-foreground font-semibold">Mohamed Khaled Mahmoud</span> — a Data Scientist & Applied AI Specialist. I build AI systems that
-              <span className="text-emerald font-medium"> reduce costs</span>,
-              <span className="text-cyan font-medium"> increase revenue</span>, and
-              <span className="text-foreground font-medium"> scale your business</span> across Saudi Arabia & the Middle East.
+            <p className="mt-5 max-w-xl text-base text-muted-foreground md:text-lg">
+              I'm a <span className="text-foreground font-semibold">Data Scientist & Applied AI Specialist</span>. I design predictive models and intelligent data pipelines that
+              <span className="text-emerald font-medium"> cut costs</span>,
+              <span className="text-cyan font-medium"> drive revenue</span>, and
+              <span className="text-foreground font-medium"> scale businesses</span>.
+            </p>
+            <p className="mt-3 max-w-xl text-sm text-muted-foreground md:text-base">
+              I help in analyzing data, proposing solutions to improve sales productivity, and organizing workflows within the company.
             </p>
 
             {/* social row */}
