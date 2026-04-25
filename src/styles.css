@@ -149,3 +149,9 @@
   50% { transform: translateY(-10px); }
 }
 .animate-float { animation: float 6s ease-in-out infinite; }
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 30px -5px oklch(0.72 0.17 162 / 0.55), 0 0 0 0 oklch(0.72 0.17 162 / 0.4); }
+  50%      { box-shadow: 0 0 55px -2px oklch(0.74 0.14 200 / 0.7), 0 0 0 8px oklch(0.72 0.17 162 / 0); }
+}
+.animate-pulse-glow { animation: pulse-glow 2.4s ease-in-out infinite; }
