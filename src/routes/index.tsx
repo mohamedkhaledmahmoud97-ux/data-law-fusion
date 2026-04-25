@@ -690,10 +690,19 @@ function Hero() {
                 href={CALENDLY_URL}
                 target="_blank"
                 rel="noreferrer"
-                className="group relative inline-flex items-center gap-2 overflow-hidden rounded-xl bg-gradient-to-r from-emerald to-cyan px-6 py-3 text-sm font-semibold text-background shadow-[0_0_30px_-5px] shadow-emerald transition-transform hover:scale-[1.03]"
+                className="group relative inline-flex animate-pulse-glow items-center gap-2 overflow-hidden rounded-xl bg-gradient-to-r from-emerald to-cyan px-7 py-3.5 text-sm font-semibold text-background shadow-[0_0_40px_-5px] shadow-emerald transition-transform hover:scale-[1.04]"
               >
                 <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-white/0 via-white/30 to-white/0 transition-transform duration-700 group-hover:translate-x-full" />
-                <HiCalendar /> Book Free Call <HiArrowRight />
+                <HiSparkles /> Hire Me <HiArrowRight />
+              </a>
+              <a
+                href="/cv.pdf"
+                target="_blank"
+                rel="noreferrer"
+                download
+                className="inline-flex items-center gap-2 rounded-xl glass-strong border border-glass-border px-6 py-3 text-sm font-semibold text-foreground hover:bg-white/5"
+              >
+                <HiDownload /> Download CV
               </a>
               <a
                 href="#portfolio"
