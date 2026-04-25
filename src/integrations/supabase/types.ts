@@ -14,7 +14,27 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      cv_downloads: {
+        Row: {
+          downloaded_at: string
+          id: string
+          referrer: string | null
+          user_agent: string | null
+        }
+        Insert: {
+          downloaded_at?: string
+          id?: string
+          referrer?: string | null
+          user_agent?: string | null
+        }
+        Update: {
+          downloaded_at?: string
+          id?: string
+          referrer?: string | null
+          user_agent?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
