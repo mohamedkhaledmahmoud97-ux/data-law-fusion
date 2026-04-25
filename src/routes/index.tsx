@@ -6,7 +6,7 @@ import {
   HiMail, HiPhone, HiLocationMarker, HiArrowRight, HiCheckCircle, HiScale,
   HiUserGroup, HiGlobe, HiLightningBolt, HiCog, HiDocumentText, HiBadgeCheck,
   HiExternalLink, HiChevronDown, HiSearch, HiChevronLeft, HiChevronRight,
-  HiSun, HiMoon, HiCalendar, HiTrendingUp, HiCursorClick, HiDownload,
+  HiSun, HiMoon, HiCalendar, HiTrendingUp, HiCursorClick, HiDocumentDownload,
 } from "react-icons/hi";
 import { FaLinkedin, FaGithub, FaMicrosoft, FaUniversity, FaGoogle } from "react-icons/fa";
 import { SiPostgresql } from "react-icons/si";
@@ -702,7 +702,7 @@ function Hero() {
                 download
                 className="inline-flex items-center gap-2 rounded-xl glass-strong border border-glass-border px-6 py-3 text-sm font-semibold text-foreground hover:bg-white/5"
               >
-                <HiDownload /> Download CV
+                <HiDocumentDownload /> Download CV
               </a>
               <a
                 href="#portfolio"
