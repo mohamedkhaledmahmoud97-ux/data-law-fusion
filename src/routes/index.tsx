@@ -702,7 +702,7 @@ function Hero() {
                 download
                 className="inline-flex items-center gap-2 rounded-xl glass-strong border border-glass-border px-6 py-3 text-sm font-semibold text-foreground hover:bg-white/5"
               >
-                <HiDownload /> Download CV
+                <HiDocumentDownload /> Download CV
               </a>
               <a
                 href="#portfolio"
