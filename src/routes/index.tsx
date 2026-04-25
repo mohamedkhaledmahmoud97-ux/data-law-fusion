@@ -61,12 +61,41 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Mohamed Khaled Mahmoud — Professional Data Analyst at MCIT. Hybrid Legal + Data profile. 150+ projects, Power BI, SQL, Python, AI, and regulatory compliance expertise.",
+          "Mohamed Khaled Mahmoud — Professional Data Analyst at MCIT. Hybrid Legal + Data profile. 150+ projects, Power BI, SQL, Python, AI, and regulatory compliance expertise. Download CV.",
       },
       { property: "og:title", content: "Mohamed Khaled Mahmoud — Data Analyst & AI Specialist" },
-      { property: "og:description", content: "The intersection of Data & Law. 150+ projects delivered. UN COP27 Action Leader." },
+      { property: "og:description", content: "The intersection of Data & Law. 150+ projects delivered. UN COP27 Action Leader. Download CV." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+    ],
+    links: [
+      {
+        rel: "alternate",
+        type: "application/pdf",
+        href: "https://drive.google.com/file/d/102oU9OtEmzdAWFfDvgo3jUAS7pNVdIAI/view?usp=drive_web",
+        title: "Mohamed Khaled Mahmoud — CV (PDF)",
+      },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Person",
+          name: "Mohamed Khaled Mahmoud",
+          jobTitle: "Professional Data Analyst",
+          worksFor: { "@type": "Organization", name: "MCIT" },
+          description:
+            "Professional Data Analyst with hybrid Legal + Data profile. 150+ projects in Power BI, SQL, Python, and AI.",
+          subjectOf: {
+            "@type": "DigitalDocument",
+            name: "Mohamed Khaled Mahmoud — CV",
+            description: "Curriculum Vitae (PDF) of Mohamed Khaled Mahmoud, Professional Data Analyst.",
+            encodingFormat: "application/pdf",
+            url: "https://drive.google.com/file/d/102oU9OtEmzdAWFfDvgo3jUAS7pNVdIAI/view?usp=drive_web",
+          },
+        }),
+      },
     ],
   }),
   component: Portfolio,
