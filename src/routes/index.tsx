@@ -12,6 +12,20 @@ import { FaLinkedin, FaGithub, FaMicrosoft, FaUniversity, FaGoogle } from "react
 import { SiPostgresql } from "react-icons/si";
 import mohamedImg from "@/assets/mohamed.png";
 import { Chatbot } from "@/components/Chatbot";
+import { supabase } from "@/integrations/supabase/client";
+
+const trackCvDownload = () => {
+  // Fire-and-forget: never block the download
+  supabase
+    .from("cv_downloads")
+    .insert({
+      user_agent: typeof navigator !== "undefined" ? navigator.userAgent : null,
+      referrer: typeof document !== "undefined" ? document.referrer || null : null,
+    })
+    .then(({ error }) => {
+      if (error) console.warn("CV download tracking failed:", error.message);
+    });
+};
 
 // Dashboard screenshots (uploaded by Mohamed — Power BI, Excel, Orange)
 import dashPbiSales from "@/assets/dashboard-powerbi-sales.png";
@@ -700,6 +714,7 @@ function Hero() {
                 target="_blank"
                 rel="noreferrer"
                 download
+                onClick={trackCvDownload}
                 className="inline-flex items-center gap-2 rounded-xl glass-strong border border-glass-border px-6 py-3 text-sm font-semibold text-foreground hover:bg-white/5"
               >
                 <HiDocumentDownload /> Download CV
