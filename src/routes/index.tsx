@@ -710,11 +710,12 @@ function Hero() {
                 <HiSparkles /> Hire Me <HiArrowRight />
               </a>
               <a
-                href="/cv.pdf"
+                href="https://drive.google.com/file/d/102oU9OtEmzdAWFfDvgo3jUAS7pNVdIAI/view?usp=drive_web"
                 target="_blank"
-                rel="noreferrer"
-                download
+                rel="noopener noreferrer"
                 onClick={trackCvDownload}
+                aria-label="Download Mohamed Khaled Mahmoud CV (PDF)"
+                title="Download Mohamed Khaled Mahmoud CV (PDF)"
                 className="inline-flex items-center gap-2 rounded-xl glass-strong border border-glass-border px-6 py-3 text-sm font-semibold text-foreground hover:bg-white/5"
               >
                 <HiDocumentDownload /> Download CV
