@@ -112,7 +112,38 @@ const navLinks = [
   { id: "portfolio", label: "Portfolio" },
   { id: "education", label: "Education" },
   { id: "certifications", label: "Certifications" },
+  { id: "faq", label: "FAQ" },
   { id: "contact", label: "Contact" },
+];
+
+/* ============================================================
+   FAQ DATA (mirrored in JSON-LD FAQPage schema)
+   ============================================================ */
+const faqs: { q: string; a: string }[] = [
+  {
+    q: "What data analytics services do you offer?",
+    a: "End-to-end data work: data cleaning and modeling in SQL/Python, interactive Power BI and Excel dashboards, KPI design, sales and HR analytics, forecasting, and AI/ML proofs of concept. 150+ delivered projects across MCIT and freelance engagements.",
+  },
+  {
+    q: "Which tools and technologies do you use?",
+    a: "Power BI, SQL (PostgreSQL, T-SQL), Python (pandas, scikit-learn, PyTorch, Streamlit), advanced Excel (Power Query, DAX), Orange data mining, and modern AI stacks including LLM integrations and computer vision (YOLO, BERT).",
+  },
+  {
+    q: "How do you combine legal expertise with data analysis?",
+    a: "I hold an LL.M in International Law and work as a Professional Data Analyst at MCIT. That hybrid lens lets me design analytics that respect data-protection law, build compliance dashboards for regulators, and translate legal requirements into measurable KPIs and audit trails.",
+  },
+  {
+    q: "What is your experience with regulatory and data-protection compliance?",
+    a: "I advise on Egyptian and international data-protection frameworks, GDPR-aligned data handling, governance for public-sector ICT, and risk reporting. Engagements include policy review, data-flow mapping, and analytics dashboards for compliance monitoring.",
+  },
+  {
+    q: "Can you help with AI and machine-learning projects?",
+    a: "Yes — from classical ML (churn prediction, segmentation, intrusion detection, sales forecasting) to deep learning (BERT sentiment, YOLO object detection, NLP resume parsing) and applied LLM workflows like the Smart Assistant on this site.",
+  },
+  {
+    q: "How can I download your CV or get in touch?",
+    a: "Use the Download CV button in the hero (Google Drive PDF), the Contact form below, or schedule a 15-minute intro call via Calendly. The floating Smart Assistant can also answer questions about my experience in real time.",
+  },
 ];
 
 const stats = [
