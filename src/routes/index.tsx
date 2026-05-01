@@ -1,17 +1,19 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { motion, AnimatePresence } from "framer-motion";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, lazy, Suspense } from "react";
 import {
   HiCode, HiDatabase, HiChartBar, HiAcademicCap, HiBriefcase, HiSparkles,
   HiMail, HiPhone, HiLocationMarker, HiArrowRight, HiCheckCircle, HiScale,
   HiUserGroup, HiGlobe, HiLightningBolt, HiCog, HiDocumentText, HiBadgeCheck,
   HiExternalLink, HiChevronDown, HiSearch, HiChevronLeft, HiChevronRight,
   HiSun, HiMoon, HiCalendar, HiTrendingUp, HiCursorClick, HiDocumentDownload,
+  HiQuestionMarkCircle, HiChat,
 } from "react-icons/hi";
 import { FaLinkedin, FaGithub, FaMicrosoft, FaUniversity, FaGoogle } from "react-icons/fa";
 import { SiPostgresql } from "react-icons/si";
 import mohamedImg from "@/assets/mohamed.png";
-import { Chatbot } from "@/components/Chatbot";
+// Lazy-load chatbot — keeps framer-motion + ReactMarkdown out of the initial render path
+const Chatbot = lazy(() => import("@/components/Chatbot").then((m) => ({ default: m.Chatbot })));
 import { supabase } from "@/integrations/supabase/client";
 
 const trackCvDownload = () => {
