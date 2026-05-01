@@ -1,17 +1,19 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { motion, AnimatePresence } from "framer-motion";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, lazy, Suspense } from "react";
 import {
   HiCode, HiDatabase, HiChartBar, HiAcademicCap, HiBriefcase, HiSparkles,
   HiMail, HiPhone, HiLocationMarker, HiArrowRight, HiCheckCircle, HiScale,
   HiUserGroup, HiGlobe, HiLightningBolt, HiCog, HiDocumentText, HiBadgeCheck,
   HiExternalLink, HiChevronDown, HiSearch, HiChevronLeft, HiChevronRight,
   HiSun, HiMoon, HiCalendar, HiTrendingUp, HiCursorClick, HiDocumentDownload,
+  HiQuestionMarkCircle, HiChat,
 } from "react-icons/hi";
 import { FaLinkedin, FaGithub, FaMicrosoft, FaUniversity, FaGoogle } from "react-icons/fa";
 import { SiPostgresql } from "react-icons/si";
 import mohamedImg from "@/assets/mohamed.png";
-import { Chatbot } from "@/components/Chatbot";
+// Lazy-load chatbot — keeps framer-motion + ReactMarkdown out of the initial render path
+const Chatbot = lazy(() => import("@/components/Chatbot").then((m) => ({ default: m.Chatbot })));
 import { supabase } from "@/integrations/supabase/client";
 
 const trackCvDownload = () => {
@@ -87,6 +89,12 @@ export const Route = createFileRoute("/")({
           worksFor: { "@type": "Organization", name: "MCIT" },
           description:
             "Professional Data Analyst with hybrid Legal + Data profile. 150+ projects in Power BI, SQL, Python, and AI.",
+          url: "https://mohamedkhaledel-shayp.lovable.app/",
+          image: "https://mohamedkhaledel-shayp.lovable.app/og-image.png",
+          sameAs: [
+            "https://www.linkedin.com/in/Mohamed-Khaled-El-Shayp-b50385234",
+            "https://github.com/MohamedKhaledElShayp",
+          ],
           subjectOf: {
             "@type": "DigitalDocument",
             name: "Mohamed Khaled Mahmoud — CV",
@@ -94,6 +102,85 @@ export const Route = createFileRoute("/")({
             encodingFormat: "application/pdf",
             url: "https://drive.google.com/file/d/102oU9OtEmzdAWFfDvgo3jUAS7pNVdIAI/view?usp=drive_web",
           },
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: [
+            {
+              "@type": "Question",
+              name: "What data analytics services do you offer?",
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: "End-to-end data work: data cleaning and modeling in SQL/Python, interactive Power BI and Excel dashboards, KPI design, sales and HR analytics, forecasting, and AI/ML proofs of concept. 150+ delivered projects across MCIT and freelance engagements.",
+              },
+            },
+            {
+              "@type": "Question",
+              name: "Which tools and technologies do you use?",
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: "Power BI, SQL (PostgreSQL, T-SQL), Python (pandas, scikit-learn, PyTorch, Streamlit), advanced Excel (Power Query, DAX), Orange data mining, and modern AI stacks including LLM integrations and computer vision (YOLO, BERT).",
+              },
+            },
+            {
+              "@type": "Question",
+              name: "How do you combine legal expertise with data analysis?",
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: "I hold an LL.M in International Law and work as a Professional Data Analyst at MCIT. That hybrid lens lets me design analytics that respect data-protection law, build compliance dashboards for regulators, and translate legal requirements into measurable KPIs and audit trails.",
+              },
+            },
+            {
+              "@type": "Question",
+              name: "What is your experience with regulatory and data-protection compliance?",
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: "I advise on Egyptian and international data-protection frameworks, GDPR-aligned data handling, governance for public-sector ICT, and risk reporting. Engagements include policy review, data-flow mapping, and analytics dashboards for compliance monitoring.",
+              },
+            },
+            {
+              "@type": "Question",
+              name: "Can you help with AI and machine-learning projects?",
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: "Yes — from classical ML (churn prediction, segmentation, intrusion detection, sales forecasting) to deep learning (BERT sentiment, YOLO object detection, NLP resume parsing) and applied LLM workflows like the Smart Assistant on this site.",
+              },
+            },
+            {
+              "@type": "Question",
+              name: "How can I download your CV or get in touch?",
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: "Use the Download CV button in the hero (Google Drive PDF), the Contact form below, or schedule a 15-minute intro call via Calendly. The floating Smart Assistant can also answer questions about my experience in real time.",
+              },
+            },
+          ],
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "WebApplication",
+          name: "Mohamed Khaled — Smart Assistant",
+          applicationCategory: "BusinessApplication",
+          operatingSystem: "Any (web browser)",
+          browserRequirements: "Requires JavaScript. Requires modern browser.",
+          description:
+            "AI chatbot embedded on Mohamed Khaled Mahmoud's portfolio. Answers questions about his CV, data analytics projects, AI work, legal background, certifications, and availability.",
+          url: "https://mohamedkhaledel-shayp.lovable.app/#assistant-help",
+          offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+          featureList: [
+            "Ask about Mohamed's experience and projects",
+            "Get a summary of skills and certifications",
+            "Request the CV or contact details",
+            "General Q&A grounded in the portfolio context",
+          ],
+          creator: { "@type": "Person", name: "Mohamed Khaled Mahmoud" },
         }),
       },
     ],
@@ -112,7 +199,38 @@ const navLinks = [
   { id: "portfolio", label: "Portfolio" },
   { id: "education", label: "Education" },
   { id: "certifications", label: "Certifications" },
+  { id: "faq", label: "FAQ" },
   { id: "contact", label: "Contact" },
+];
+
+/* ============================================================
+   FAQ DATA (mirrored in JSON-LD FAQPage schema)
+   ============================================================ */
+const faqs: { q: string; a: string }[] = [
+  {
+    q: "What data analytics services do you offer?",
+    a: "End-to-end data work: data cleaning and modeling in SQL/Python, interactive Power BI and Excel dashboards, KPI design, sales and HR analytics, forecasting, and AI/ML proofs of concept. 150+ delivered projects across MCIT and freelance engagements.",
+  },
+  {
+    q: "Which tools and technologies do you use?",
+    a: "Power BI, SQL (PostgreSQL, T-SQL), Python (pandas, scikit-learn, PyTorch, Streamlit), advanced Excel (Power Query, DAX), Orange data mining, and modern AI stacks including LLM integrations and computer vision (YOLO, BERT).",
+  },
+  {
+    q: "How do you combine legal expertise with data analysis?",
+    a: "I hold an LL.M in International Law and work as a Professional Data Analyst at MCIT. That hybrid lens lets me design analytics that respect data-protection law, build compliance dashboards for regulators, and translate legal requirements into measurable KPIs and audit trails.",
+  },
+  {
+    q: "What is your experience with regulatory and data-protection compliance?",
+    a: "I advise on Egyptian and international data-protection frameworks, GDPR-aligned data handling, governance for public-sector ICT, and risk reporting. Engagements include policy review, data-flow mapping, and analytics dashboards for compliance monitoring.",
+  },
+  {
+    q: "Can you help with AI and machine-learning projects?",
+    a: "Yes — from classical ML (churn prediction, segmentation, intrusion detection, sales forecasting) to deep learning (BERT sentiment, YOLO object detection, NLP resume parsing) and applied LLM workflows like the Smart Assistant on this site.",
+  },
+  {
+    q: "How can I download your CV or get in touch?",
+    a: "Use the Download CV button in the hero (Google Drive PDF), the Contact form below, or schedule a 15-minute intro call via Calendly. The floating Smart Assistant can also answer questions about my experience in real time.",
+  },
 ];
 
 const stats = [
@@ -549,10 +667,14 @@ function Portfolio() {
         <PortfolioSection />
         <Education />
         <Certifications />
+        <FAQ />
+        <AssistantHelp />
         <Contact />
       </main>
       <Footer />
-      <Chatbot />
+      <Suspense fallback={null}>
+        <Chatbot />
+      </Suspense>
     </div>
   );
 }
@@ -1599,6 +1721,128 @@ function Certifications() {
               </div>
             </motion.div>
           ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ============================================================
+   FAQ
+   ============================================================ */
+
+function FAQ() {
+  const [open, setOpen] = useState<number | null>(0);
+  return (
+    <section id="faq" className="py-20">
+      <div className="mx-auto max-w-4xl px-4">
+        <SectionTitle
+          eyebrow="FAQ"
+          title="Data Analytics & Legal Compliance — Questions Answered"
+          sub="What clients and recruiters most often ask about my hybrid Data + Law profile."
+        />
+        <div className="mt-8 space-y-3">
+          {faqs.map((item, i) => {
+            const isOpen = open === i;
+            return (
+              <motion.div
+                key={item.q}
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ delay: i * 0.04 }}
+                className="glass overflow-hidden rounded-2xl border border-glass-border"
+              >
+                <button
+                  type="button"
+                  onClick={() => setOpen(isOpen ? null : i)}
+                  aria-expanded={isOpen}
+                  className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left"
+                >
+                  <span className="flex items-start gap-3">
+                    <HiQuestionMarkCircle className="mt-0.5 h-5 w-5 shrink-0 text-emerald" />
+                    <span className="font-semibold text-foreground">{item.q}</span>
+                  </span>
+                  <motion.span animate={{ rotate: isOpen ? 180 : 0 }} className="shrink-0">
+                    <HiChevronDown className="h-5 w-5 text-muted-foreground" />
+                  </motion.span>
+                </button>
+                <AnimatePresence initial={false}>
+                  {isOpen && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.25 }}
+                      className="overflow-hidden"
+                    >
+                      <p className="px-5 pb-5 text-sm leading-relaxed text-muted-foreground">
+                        {item.a}
+                      </p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ============================================================
+   ASSISTANT HELP — crawlable description of the Smart Assistant
+   ============================================================ */
+
+function AssistantHelp() {
+  return (
+    <section id="assistant-help" className="py-20">
+      <div className="mx-auto max-w-4xl px-4">
+        <SectionTitle
+          eyebrow="AI Assistant"
+          title="Meet the Smart Assistant"
+          sub="An AI chatbot trained on Mohamed's CV — ask anything about projects, skills, or availability."
+        />
+        <div className="glass mt-8 overflow-hidden rounded-3xl border border-glass-border p-6 sm:p-8">
+          <div className="flex flex-col gap-6 sm:flex-row sm:items-start">
+            <div className="grid h-16 w-16 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-emerald/20 to-cyan/20 border border-glass-border">
+              <HiChat className="h-8 w-8 text-emerald" />
+            </div>
+            <div className="flex-1">
+              <h3 className="text-xl font-semibold text-foreground">How to use the Smart Assistant</h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                Click the floating avatar in the bottom-right corner to open a chat window with
+                Mohamed Khaled's AI assistant. It is grounded in this portfolio and can answer
+                detailed questions about Mohamed's data analytics work, legal background, and
+                availability — in any language.
+              </p>
+              <div className="mt-5 grid gap-3 sm:grid-cols-2">
+                <div className="rounded-xl border border-glass-border bg-background/30 p-3">
+                  <div className="text-xs font-semibold uppercase tracking-wider text-emerald">
+                    What you can ask
+                  </div>
+                  <ul className="mt-2 space-y-1 text-sm text-muted-foreground">
+                    <li>• Summarize Mohamed's experience at MCIT</li>
+                    <li>• Which Power BI / SQL projects has he shipped?</li>
+                    <li>• Does he do data-protection compliance work?</li>
+                    <li>• How do I book an intro call?</li>
+                  </ul>
+                </div>
+                <div className="rounded-xl border border-glass-border bg-background/30 p-3">
+                  <div className="text-xs font-semibold uppercase tracking-wider text-cyan">
+                    Privacy & limits
+                  </div>
+                  <ul className="mt-2 space-y-1 text-sm text-muted-foreground">
+                    <li>• Free, no sign-up required</li>
+                    <li>• Conversation stays in your browser session</li>
+                    <li>• Rate-limited to prevent abuse</li>
+                    <li>• Best for portfolio + general questions</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
