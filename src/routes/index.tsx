@@ -667,10 +667,14 @@ function Portfolio() {
         <PortfolioSection />
         <Education />
         <Certifications />
+        <FAQ />
+        <AssistantHelp />
         <Contact />
       </main>
       <Footer />
-      <Chatbot />
+      <Suspense fallback={null}>
+        <Chatbot />
+      </Suspense>
     </div>
   );
 }
