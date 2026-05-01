@@ -1728,6 +1728,128 @@ function Certifications() {
 }
 
 /* ============================================================
+   FAQ
+   ============================================================ */
+
+function FAQ() {
+  const [open, setOpen] = useState<number | null>(0);
+  return (
+    <section id="faq" className="py-20">
+      <div className="mx-auto max-w-4xl px-4">
+        <SectionTitle
+          eyebrow="FAQ"
+          title="Data Analytics & Legal Compliance — Questions Answered"
+          sub="What clients and recruiters most often ask about my hybrid Data + Law profile."
+        />
+        <div className="mt-8 space-y-3">
+          {faqs.map((item, i) => {
+            const isOpen = open === i;
+            return (
+              <motion.div
+                key={item.q}
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ delay: i * 0.04 }}
+                className="glass overflow-hidden rounded-2xl border border-glass-border"
+              >
+                <button
+                  type="button"
+                  onClick={() => setOpen(isOpen ? null : i)}
+                  aria-expanded={isOpen}
+                  className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left"
+                >
+                  <span className="flex items-start gap-3">
+                    <HiQuestionMarkCircle className="mt-0.5 h-5 w-5 shrink-0 text-emerald" />
+                    <span className="font-semibold text-foreground">{item.q}</span>
+                  </span>
+                  <motion.span animate={{ rotate: isOpen ? 180 : 0 }} className="shrink-0">
+                    <HiChevronDown className="h-5 w-5 text-muted-foreground" />
+                  </motion.span>
+                </button>
+                <AnimatePresence initial={false}>
+                  {isOpen && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.25 }}
+                      className="overflow-hidden"
+                    >
+                      <p className="px-5 pb-5 text-sm leading-relaxed text-muted-foreground">
+                        {item.a}
+                      </p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ============================================================
+   ASSISTANT HELP — crawlable description of the Smart Assistant
+   ============================================================ */
+
+function AssistantHelp() {
+  return (
+    <section id="assistant-help" className="py-20">
+      <div className="mx-auto max-w-4xl px-4">
+        <SectionTitle
+          eyebrow="AI Assistant"
+          title="Meet the Smart Assistant"
+          sub="An AI chatbot trained on Mohamed's CV — ask anything about projects, skills, or availability."
+        />
+        <div className="glass mt-8 overflow-hidden rounded-3xl border border-glass-border p-6 sm:p-8">
+          <div className="flex flex-col gap-6 sm:flex-row sm:items-start">
+            <div className="grid h-16 w-16 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-emerald/20 to-cyan/20 border border-glass-border">
+              <HiChat className="h-8 w-8 text-emerald" />
+            </div>
+            <div className="flex-1">
+              <h3 className="text-xl font-semibold text-foreground">How to use the Smart Assistant</h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                Click the floating avatar in the bottom-right corner to open a chat window with
+                Mohamed Khaled's AI assistant. It is grounded in this portfolio and can answer
+                detailed questions about Mohamed's data analytics work, legal background, and
+                availability — in any language.
+              </p>
+              <div className="mt-5 grid gap-3 sm:grid-cols-2">
+                <div className="rounded-xl border border-glass-border bg-background/30 p-3">
+                  <div className="text-xs font-semibold uppercase tracking-wider text-emerald">
+                    What you can ask
+                  </div>
+                  <ul className="mt-2 space-y-1 text-sm text-muted-foreground">
+                    <li>• Summarize Mohamed's experience at MCIT</li>
+                    <li>• Which Power BI / SQL projects has he shipped?</li>
+                    <li>• Does he do data-protection compliance work?</li>
+                    <li>• How do I book an intro call?</li>
+                  </ul>
+                </div>
+                <div className="rounded-xl border border-glass-border bg-background/30 p-3">
+                  <div className="text-xs font-semibold uppercase tracking-wider text-cyan">
+                    Privacy & limits
+                  </div>
+                  <ul className="mt-2 space-y-1 text-sm text-muted-foreground">
+                    <li>• Free, no sign-up required</li>
+                    <li>• Conversation stays in your browser session</li>
+                    <li>• Rate-limited to prevent abuse</li>
+                    <li>• Best for portfolio + general questions</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ============================================================
    CONTACT
    ============================================================ */
 
