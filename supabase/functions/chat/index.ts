@@ -34,13 +34,105 @@ STYLE:
 - For questions about Mohamed, his work, hiring, or collaboration — be enthusiastic and encourage the visitor to reach out via email or phone.
 - Keep most answers under ~150 words unless the user asks for depth.`;
 
+// Limits to prevent payload abuse / credit exhaustion
+const MAX_MESSAGES = 30;
+const MAX_CONTENT_CHARS = 4000;
+const MAX_BODY_BYTES = 200_000; // ~200KB
+const ALLOWED_ROLES = new Set(["user", "assistant", "system"]);
+
+// Simple in-memory per-IP rate limiter (per isolate; best-effort)
+const RATE_LIMIT_WINDOW_MS = 60_000;
+const RATE_LIMIT_MAX = 20; // requests/min/IP
+const ipHits: Map<string, number[]> = new Map();
+
+function rateLimited(ip: string): boolean {
+  const now = Date.now();
+  const arr = ipHits.get(ip) ?? [];
+  const recent = arr.filter((t) => now - t < RATE_LIMIT_WINDOW_MS);
+  if (recent.length >= RATE_LIMIT_MAX) {
+    ipHits.set(ip, recent);
+    return true;
+  }
+  recent.push(now);
+  ipHits.set(ip, recent);
+  return false;
+}
+
 serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
 
   try {
-    const { messages } = await req.json();
+    // Rate limit by IP
+    const ip =
+      req.headers.get("x-forwarded-for")?.split(",")[0].trim() ||
+      req.headers.get("cf-connecting-ip") ||
+      "unknown";
+    if (rateLimited(ip)) {
+      return new Response(JSON.stringify({ error: "Too many requests. Please slow down." }), {
+        status: 429,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    // Body size check
+    const contentLength = parseInt(req.headers.get("content-length") || "0", 10);
+    if (contentLength && contentLength > MAX_BODY_BYTES) {
+      return new Response(JSON.stringify({ error: "Request body too large." }), {
+        status: 413,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    let body: any;
+    try {
+      body = await req.json();
+    } catch {
+      return new Response(JSON.stringify({ error: "Invalid JSON body." }), {
+        status: 400,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    const { messages } = body ?? {};
+
+    // Validate messages payload
+    if (!Array.isArray(messages) || messages.length === 0) {
+      return new Response(JSON.stringify({ error: "`messages` must be a non-empty array." }), {
+        status: 400,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+    if (messages.length > MAX_MESSAGES) {
+      return new Response(
+        JSON.stringify({ error: `Too many messages (max ${MAX_MESSAGES}).` }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+    for (const m of messages) {
+      if (
+        !m ||
+        typeof m !== "object" ||
+        typeof m.role !== "string" ||
+        !ALLOWED_ROLES.has(m.role) ||
+        typeof m.content !== "string" ||
+        m.content.length === 0 ||
+        m.content.length > MAX_CONTENT_CHARS
+      ) {
+        return new Response(
+          JSON.stringify({ error: "Invalid message format." }),
+          { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
+    }
+
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
-    if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY is not configured");
+    if (!LOVABLE_API_KEY) {
+      console.error("LOVABLE_API_KEY is not configured");
+      return new Response(JSON.stringify({ error: "Service temporarily unavailable." }), {
+        status: 500,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
 
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
@@ -63,14 +155,14 @@ serve(async (req) => {
         });
       }
       if (response.status === 402) {
-        return new Response(JSON.stringify({ error: "AI credits exhausted. Please add funds to your Lovable workspace." }), {
+        return new Response(JSON.stringify({ error: "AI service unavailable." }), {
           status: 402,
           headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
       }
       const t = await response.text();
       console.error("AI gateway error:", response.status, t);
-      return new Response(JSON.stringify({ error: "AI gateway error" }), {
+      return new Response(JSON.stringify({ error: "Internal server error" }), {
         status: 500,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
@@ -81,7 +173,7 @@ serve(async (req) => {
     });
   } catch (e) {
     console.error("chat error:", e);
-    return new Response(JSON.stringify({ error: e instanceof Error ? e.message : "Unknown error" }), {
+    return new Response(JSON.stringify({ error: "Internal server error" }), {
       status: 500,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
