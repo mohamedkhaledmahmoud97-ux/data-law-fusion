@@ -87,6 +87,12 @@ export const Route = createFileRoute("/")({
           worksFor: { "@type": "Organization", name: "MCIT" },
           description:
             "Professional Data Analyst with hybrid Legal + Data profile. 150+ projects in Power BI, SQL, Python, and AI.",
+          url: "https://mohamedkhaledel-shayp.lovable.app/",
+          image: "https://mohamedkhaledel-shayp.lovable.app/og-image.png",
+          sameAs: [
+            "https://www.linkedin.com/in/Mohamed-Khaled-El-Shayp-b50385234",
+            "https://github.com/MohamedKhaledElShayp",
+          ],
           subjectOf: {
             "@type": "DigitalDocument",
             name: "Mohamed Khaled Mahmoud — CV",
@@ -94,6 +100,85 @@ export const Route = createFileRoute("/")({
             encodingFormat: "application/pdf",
             url: "https://drive.google.com/file/d/102oU9OtEmzdAWFfDvgo3jUAS7pNVdIAI/view?usp=drive_web",
           },
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: [
+            {
+              "@type": "Question",
+              name: "What data analytics services do you offer?",
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: "End-to-end data work: data cleaning and modeling in SQL/Python, interactive Power BI and Excel dashboards, KPI design, sales and HR analytics, forecasting, and AI/ML proofs of concept. 150+ delivered projects across MCIT and freelance engagements.",
+              },
+            },
+            {
+              "@type": "Question",
+              name: "Which tools and technologies do you use?",
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: "Power BI, SQL (PostgreSQL, T-SQL), Python (pandas, scikit-learn, PyTorch, Streamlit), advanced Excel (Power Query, DAX), Orange data mining, and modern AI stacks including LLM integrations and computer vision (YOLO, BERT).",
+              },
+            },
+            {
+              "@type": "Question",
+              name: "How do you combine legal expertise with data analysis?",
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: "I hold an LL.M in International Law and work as a Professional Data Analyst at MCIT. That hybrid lens lets me design analytics that respect data-protection law, build compliance dashboards for regulators, and translate legal requirements into measurable KPIs and audit trails.",
+              },
+            },
+            {
+              "@type": "Question",
+              name: "What is your experience with regulatory and data-protection compliance?",
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: "I advise on Egyptian and international data-protection frameworks, GDPR-aligned data handling, governance for public-sector ICT, and risk reporting. Engagements include policy review, data-flow mapping, and analytics dashboards for compliance monitoring.",
+              },
+            },
+            {
+              "@type": "Question",
+              name: "Can you help with AI and machine-learning projects?",
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: "Yes — from classical ML (churn prediction, segmentation, intrusion detection, sales forecasting) to deep learning (BERT sentiment, YOLO object detection, NLP resume parsing) and applied LLM workflows like the Smart Assistant on this site.",
+              },
+            },
+            {
+              "@type": "Question",
+              name: "How can I download your CV or get in touch?",
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: "Use the Download CV button in the hero (Google Drive PDF), the Contact form below, or schedule a 15-minute intro call via Calendly. The floating Smart Assistant can also answer questions about my experience in real time.",
+              },
+            },
+          ],
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "WebApplication",
+          name: "Mohamed Khaled — Smart Assistant",
+          applicationCategory: "BusinessApplication",
+          operatingSystem: "Any (web browser)",
+          browserRequirements: "Requires JavaScript. Requires modern browser.",
+          description:
+            "AI chatbot embedded on Mohamed Khaled Mahmoud's portfolio. Answers questions about his CV, data analytics projects, AI work, legal background, certifications, and availability.",
+          url: "https://mohamedkhaledel-shayp.lovable.app/#assistant-help",
+          offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+          featureList: [
+            "Ask about Mohamed's experience and projects",
+            "Get a summary of skills and certifications",
+            "Request the CV or contact details",
+            "General Q&A grounded in the portfolio context",
+          ],
+          creator: { "@type": "Person", name: "Mohamed Khaled Mahmoud" },
         }),
       },
     ],
